@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="LitGe.Popups.DownloadChaptersPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:popups="clr-namespace:LitGe.Popups"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:DataType="popups:DownloadChaptersPopup"
+    CanBeDismissedByTappingOutsideOfPopup="True"
+    VerticalOptions="End"
+    Color="Transparent">
+    <Border>
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="30,30,0,0" />
+        </Border.StrokeShape>
+        <Grid
+            Padding="20,0"
+            Background="White"
+            RowDefinitions=".14*,.3*,.25*,.1*,.2*">
+            <Image
+                Grid.Row="0"
+                Aspect="Center"
+                HorizontalOptions="End"
+                Source="x_icon_black.svg">
+                <Image.Behaviors>
+                    <toolkit:TouchBehavior
+                        Command="{Binding CloseCommand}"
+                        DefaultAnimationDuration="100"
+                        DefaultAnimationEasing="{x:Static Easing.CubicInOut}"
+                        PressedOpacity="0.6"
+                        PressedScale="0.95" />
+                </Image.Behaviors>
+            </Image>
+            <Image Grid.Row="1" Source="empty_vector.png" />
+            <Image
+                Grid.Row="1"
+                Aspect="Center"
+                Source="download_green.png"
+                TranslationX="10" />
+            <Label
+                Grid.Row="2"
+                FontAttributes="Bold"
+                FontSize="Title"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                LineBreakMode="WordWrap"
+                Text="მოუსმინე ინტერნეტის                 გარეშე"
+                TextColor="Black"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center" />
+            <Label
+                Grid.Row="3"
+                HorizontalOptions="Center"
+                Opacity=".7"
+                Text="{Binding SizeText}"
+                TextColor="Black"
+                VerticalOptions="Center" />
+
+            <Button
+                Grid.Row="4"
+                Margin="0,15"
+                BackgroundColor="#31363C"
+                FontSize="Medium"
+                ImageSource="download_chapter_white.png"
+                Text="ჩამოტვირთვა"
+                TextColor="White">
+                <Button.Behaviors>
+                    <toolkit:TouchBehavior
+                        Command="{Binding DownloadAllCallbackCommand}"
+                        DefaultAnimationDuration="100"
+                        DefaultAnimationEasing="{x:Static Easing.CubicInOut}"
+                        PressedOpacity="0.6"
+                        PressedScale="0.95" />
+                </Button.Behaviors>
+            </Button>
+        </Grid>
+    </Border>
+</toolkit:Popup>

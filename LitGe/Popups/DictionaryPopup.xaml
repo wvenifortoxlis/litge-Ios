@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup
+    x:Class="LitGe.Popups.DictionaryPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:LitGe.Pages"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    VerticalOptions="End"
+    Color="Transparent">
+    <AbsoluteLayout>
+        <Border
+            Padding="0"
+            AbsoluteLayout.LayoutBounds="0,1,1,300"
+            AbsoluteLayout.LayoutFlags="WidthProportional,PositionProportional">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="30,30,0,0" />
+            </Border.StrokeShape>
+            <Grid BackgroundColor="{DynamicResource Background}" RowDefinitions="*,6*,*">
+                <ScrollView Grid.Row="1">
+                    <StackLayout x:Name="stack" />
+                </ScrollView>
+            </Grid>
+        </Border>
+    </AbsoluteLayout>
+</mct:Popup>

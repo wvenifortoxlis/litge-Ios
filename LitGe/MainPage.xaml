@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="LitGe.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:LitGe"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Name="Page"
+    BackgroundColor="White"
+    Shell.FlyoutItemIsVisible="False">
+
+    <Grid RowDefinitions=".85*,.15*">
+        <Grid Grid.Row="0">
+            <VerticalStackLayout Spacing="15" VerticalOptions="Center">
+
+                <Image Source="logo.svg" />
+                <Image Source="main_text.svg" />
+            </VerticalStackLayout>
+        </Grid>
+        <Grid Grid.Row="2">
+            <VerticalStackLayout Spacing="30">
+                <Button
+                    Margin="30,0"
+                    BackgroundColor="{DynamicResource DarkerBackground}"
+                    Clicked="LoginButton_Clicked"
+                    CornerRadius="10"
+                    FontAttributes="Bold"
+                    FontSize="Subtitle"
+                    Text="შესვლა"
+                    TextColor="White" />
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Subtitle"
+                    HorizontalTextAlignment="Center"
+                    Text="რეგისტრაცია"
+                    TextColor="Black"
+                    TextDecorations="Underline">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </VerticalStackLayout>
+        </Grid>
+    </Grid>
+
+    <!--<AbsoluteLayout>
+    -->
+    <!--  Main content goes here  -->
+    <!--
+        <StackLayout AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+            <Label
+                HorizontalOptions="Center"
+                Text="Main Content"
+                TextColor="Black"
+                VerticalOptions="Center" />
+        </StackLayout>
+
+    -->
+    <!--  Bottom Sheet  -->
+    <!--
+        <Frame
+            x:Name="BottomSheet"
+            AbsoluteLayout.LayoutBounds="0.5, 1, 1, 0.9"
+            AbsoluteLayout.LayoutFlags="All"
+            BackgroundColor="Yellow"
+            CornerRadius="20">
+            <Frame.GestureRecognizers>
+                <PanGestureRecognizer PanUpdated="OnPanUpdated" />
+            </Frame.GestureRecognizers>
+
+            <StackLayout>
+                <Label
+                    FontSize="Large"
+                    HorizontalOptions="Center"
+                    Text="Pull me up"
+                    TextColor="Black" />
+    -->
+    <!--  Add more content here  -->
+    <!--
+            </StackLayout>
+        </Frame>
+    </AbsoluteLayout>-->
+</ContentPage>

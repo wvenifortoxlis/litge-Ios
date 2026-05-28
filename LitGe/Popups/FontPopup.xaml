@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup
+    x:Class="LitGe.Popups.FontPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    VerticalOptions="End"
+    Color="Transparent">
+    <Border BackgroundColor="{DynamicResource DarkerBackground}">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="30,30,0,0" />
+        </Border.StrokeShape>
+        <Grid Padding="20,20,10,10" RowDefinitions="*,5*">
+            <Grid Grid.Row="0" ColumnDefinitions="*,40">
+                <Label
+                    Grid.Column="0"
+                    FontAttributes="Bold"
+                    FontAutoScalingEnabled="False"
+                    FontSize="Large"
+                    Text="კითხვის პარამეტრები"
+                    TextColor="{DynamicResource TextColor}"
+                    VerticalOptions="Start" />
+                <ImageButton
+                    Grid.Column="1"
+                    Clicked="ImageButton_Clicked"
+                    HeightRequest="20"
+                    Source="x_icon.svg"
+                    VerticalOptions="Start"
+                    WidthRequest="20" />
+            </Grid>
+            <Grid
+                Grid.Row="1"
+                ColumnDefinitions="*,60,60,60"
+                ColumnSpacing="5"
+                RowDefinitions="*,*">
+                <Label
+                    Grid.Column="0"
+                    FontAutoScalingEnabled="False"
+                    FontSize="Medium"
+                    Text="ფონტის ზომა"
+                    TextColor="{DynamicResource TextColor}"
+                    VerticalOptions="Center" />
+                <Button
+                    Grid.Column="2"
+                    BackgroundColor="#464A4F"
+                    Clicked="Button_Clicked"
+                    FontAttributes="Bold"
+                    FontAutoScalingEnabled="False"
+                    HeightRequest="36"
+                    Text="- A"
+                    TextColor="{DynamicResource TextColor}"
+                    WidthRequest="56" />
+                <Button
+                    Grid.Column="3"
+                    BackgroundColor="#464A4F"
+                    Clicked="Button_Clicked_1"
+                    FontAttributes="Bold"
+                    FontAutoScalingEnabled="False"
+                    HeightRequest="36"
+                    Text="+ A"
+                    TextColor="{DynamicResource TextColor}"
+                    WidthRequest="56" />
+                <BoxView
+                    Grid.ColumnSpan="4"
+                    HeightRequest="0.5"
+                    VerticalOptions="End"
+                    Color="#464A4F" />
+                <Label
+                    Grid.Row="1"
+                    FontAutoScalingEnabled="False"
+                    FontSize="Medium"
+                    Text="ფონის ფერი"
+                    TextColor="{DynamicResource TextColor}"
+                    VerticalOptions="Center" />
+                <Button
+                    x:Name="whiteColor"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    BackgroundColor="#FFFFFF"
+                    Clicked="whiteColor_Clicked"
+                    FontAttributes="Bold"
+                    FontAutoScalingEnabled="False"
+                    HeightRequest="36"
+                    Text="T"
+                    TextColor="{DynamicResource DarkerTextColor}"
+                    WidthRequest="56" />
+                <Button
+                    x:Name="creamyColor"
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    BackgroundColor="#FBF0D9"
+                    Clicked="creamyColor_Clicked"
+                    FontAttributes="Bold"
+                    FontAutoScalingEnabled="False"
+                    HeightRequest="36"
+                    Text="T"
+                    TextColor="{DynamicResource DarkerTextColor}"
+                    WidthRequest="56" />
+                <Button
+                    x:Name="darkColor"
+                    Grid.Row="1"
+                    Grid.Column="3"
+                    BackgroundColor="#121417"
+                    Clicked="darkColor_Clicked"
+                    FontAttributes="Bold"
+                    FontAutoScalingEnabled="False"
+                    HeightRequest="36"
+                    Text="T"
+                    TextColor="{DynamicResource TextColor}"
+                    WidthRequest="56" />
+                <BoxView
+                    Grid.Row="1"
+                    Grid.ColumnSpan="4"
+                    HeightRequest="0.5"
+                    VerticalOptions="End"
+                    Color="#464A4F" />
+                <!--<Label
+                    Grid.Row="2"
+                    FontAutoScalingEnabled="False"
+                    FontSize="Medium"
+                    Text="ტექსტის განლაგება"
+                    TextColor="{DynamicResource TextColor}"
+                    VerticalOptions="Center" />
+                <Button
+                    x:Name="startAlignment"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    BackgroundColor="#FFFFFF"
+                    Clicked="startAlignment_Clicked"
+                    FontAutoScalingEnabled="False"
+                    HeightRequest="36"
+                    ImageSource="align_left.png"
+                    WidthRequest="56" />
+                <Button
+                    x:Name="centerAlignment"
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    BackgroundColor="#FFFFFF"
+                    Clicked="centerAlignment_Clicked"
+                    FontAutoScalingEnabled="False"
+                    HeightRequest="36"
+                    ImageSource="align_mid.png"
+                    WidthRequest="56" />
+                <Button
+                    x:Name="endAlignment"
+                    Grid.Row="2"
+                    Grid.Column="3"
+                    BackgroundColor="#FFFFFF"
+                    Clicked="endAlignment_Clicked"
+                    FontAutoScalingEnabled="False"
+                    HeightRequest="36"
+                    ImageSource="align_right.png"
+                    WidthRequest="56" />-->
+            </Grid>
+        </Grid>
+    </Border>
+</mct:Popup>

@@ -1,0 +1,26 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Detected signing identity:
+    Code Signing Key: "" (-)
+    Provisioning Profile: "" () - no entitlements
+    Bundle Id: com.companyname.LitGe
+    App Id: com.companyname.LitGe
+/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/Pages/BooksPage.xaml.cs(17,17): error CS0246: The type or namespace name 'LitGeStateMachine<>' could not be found (are you missing a using directive or an assembly reference?) [/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/LitGe.csproj::TargetFramework=net9.0-ios]
+/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/Pages/BooksPage.xaml.cs(213,26): error CS0246: The type or namespace name 'LitGeStateMachine<>' could not be found (are you missing a using directive or an assembly reference?) [/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/LitGe.csproj::TargetFramework=net9.0-ios]
+/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/Pages/BooksPage.xaml.cs(285,13): error CS0246: The type or namespace name 'LitGeStateMachine<>' could not be found (are you missing a using directive or an assembly reference?) [/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/LitGe.csproj::TargetFramework=net9.0-ios]
+/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/Providers/opensslkey.cs(12,14): warning CS8981: The type name 'opensslkey' only contains lower-cased ascii characters. Such names may become reserved for the language. [/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/LitGe.csproj::TargetFramework=net9.0-ios]
+/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/obj/Debug/net9.0-ios/iossimulator-arm64/Microsoft.Maui.Controls.SourceGen/Microsoft.Maui.Controls.SourceGen.CodeBehindGenerator/Pages_LoginPage.xaml.sg.cs(24,11): warning CS0618: 'Frame' is obsolete: 'Frame is obsolete as of .NET 9. Please use Border instead.' [/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/LitGe.csproj::TargetFramework=net9.0-ios]
+/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/obj/Debug/net9.0-ios/iossimulator-arm64/Microsoft.Maui.Controls.SourceGen/Microsoft.Maui.Controls.SourceGen.CodeBehindGenerator/Pages_LoginPage.xaml.sg.cs(30,11): warning CS0618: 'Frame' is obsolete: 'Frame is obsolete as of .NET 9. Please use Border instead.' [/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/LitGe.csproj::TargetFramework=net9.0-ios]
+
+Build FAILED.
+
+/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/Providers/opensslkey.cs(12,14): warning CS8981: The type name 'opensslkey' only contains lower-cased ascii characters. Such names may become reserved for the language. [/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/LitGe.csproj::TargetFramework=net9.0-ios]
+/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/obj/Debug/net9.0-ios/iossimulator-arm64/Microsoft.Maui.Controls.SourceGen/Microsoft.Maui.Controls.SourceGen.CodeBehindGenerator/Pages_LoginPage.xaml.sg.cs(24,11): warning CS0618: 'Frame' is obsolete: 'Frame is obsolete as of .NET 9. Please use Border instead.' [/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/LitGe.csproj::TargetFramework=net9.0-ios]
+/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/obj/Debug/net9.0-ios/iossimulator-arm64/Microsoft.Maui.Controls.SourceGen/Microsoft.Maui.Controls.SourceGen.CodeBehindGenerator/Pages_LoginPage.xaml.sg.cs(30,11): warning CS0618: 'Frame' is obsolete: 'Frame is obsolete as of .NET 9. Please use Border instead.' [/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/LitGe.csproj::TargetFramework=net9.0-ios]
+/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/Pages/BooksPage.xaml.cs(17,17): error CS0246: The type or namespace name 'LitGeStateMachine<>' could not be found (are you missing a using directive or an assembly reference?) [/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/LitGe.csproj::TargetFramework=net9.0-ios]
+/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/Pages/BooksPage.xaml.cs(213,26): error CS0246: The type or namespace name 'LitGeStateMachine<>' could not be found (are you missing a using directive or an assembly reference?) [/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/LitGe.csproj::TargetFramework=net9.0-ios]
+/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/Pages/BooksPage.xaml.cs(285,13): error CS0246: The type or namespace name 'LitGeStateMachine<>' could not be found (are you missing a using directive or an assembly reference?) [/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/LitGe.csproj::TargetFramework=net9.0-ios]
+    3 Warning(s)
+    3 Error(s)
+
+Time Elapsed 00:00:01.93

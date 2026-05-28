@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<linker>
+  <!-- Preserve the entire application assembly to prevent logic stripping -->
+  <assembly fullname="LitGe" preserve="all" />
+
+  <!-- Preserve the ZIP library used for book extraction -->
+  <assembly fullname="ICSharpCode.SharpZipLib" preserve="all" />
+  
+  <!-- Preserve critical 3rd party libraries -->
+  <assembly fullname="HtmlAgilityPack" preserve="all" />
+  <assembly fullname="Newtonsoft.Json" preserve="all" />
+</linker>

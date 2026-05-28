@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="LitGe.Pages.BookmarksModal"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:LitGe.Lib"
+    BackgroundColor="{DynamicResource DarkerBackground}">
+    <Grid RowDefinitions="70,50,*">
+        <Grid Grid.Row="0" Padding="15,5">
+            <Label
+                FontSize="Large"
+                HorizontalOptions="Start"
+                Text="{Binding Title}"
+                TextColor="{DynamicResource TextColor}"
+                VerticalOptions="Center" />
+            <ImageButton
+                Clicked="ImageButton_Clicked"
+                HeightRequest="18"
+                HorizontalOptions="End"
+                Source="x_icon.svg"
+                VerticalOptions="Center"
+                WidthRequest="18" />
+        </Grid>
+        <Grid Grid.Row="1" ColumnDefinitions="*,*">
+            <Grid Grid.Column="0">
+                <Label
+                    Grid.Column="0"
+                    HorizontalTextAlignment="Center"
+                    Text="სარჩევი"
+                    TextColor="{DynamicResource TextColor}"
+                    VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <BoxView
+                    x:Name="leftBox"
+                    BackgroundColor="#9FE870"
+                    HeightRequest="2"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="End" />
+            </Grid>
+            <Grid Grid.Column="1">
+                <Label
+                    Grid.Column="1"
+                    HorizontalTextAlignment="Center"
+                    Text="სანიშნე"
+                    TextColor="{DynamicResource TextColor}"
+                    VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+        </Grid>
+        <local:If
+            Grid.Row="2"
+            Padding="16"
+            Condition="{Binding Switch}">
+            <local:If.True>
+                <ListView
+                    x:Name="SarcheviList"
+                    CachingStrategy="RecycleElement"
+                    ItemSelected="SarcheviList_ItemSelected"
+                    SeparatorVisibility="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid ColumnDefinitions="*,50">
+                                    <Label
+                                        Grid.Column="0"
+                                        FontAutoScalingEnabled="False"
+                                        FontSize="Small"
+                                        Text="{Binding Chapter}"
+                                        TextColor="{Binding TextColor}"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontAutoScalingEnabled="False"
+                                        FontSize="Small"
+                                        HorizontalTextAlignment="Center"
+                                        Text="{Binding Page}"
+                                        TextColor="{Binding TextColor}"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </local:If.True>
+            <local:If.False>
+                <ListView
+                    ItemsSource="{Binding BookmarkedPages}"
+                    RowHeight="150"
+                    SelectionMode="None"
+                    SeparatorVisibility="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Border
+                                    Margin="0,0,0,10"
+                                    Padding="0"
+                                    BackgroundColor="#474A4F"
+                                    StrokeThickness="0">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="5" />
+                                    </Border.StrokeShape>
+
+                                    <Grid
+                                        Padding="10,0,0,0"
+                                        ColumnDefinitions="0.8*,0.2*"
+                                        RowDefinitions="0.3*,0.2*,0.5*">
+                                        <Label
+                                            FontSize="Title"
+                                            LineBreakMode="TailTruncation"
+                                            Text="{Binding ChapterTitle}"
+                                            TextColor="White"
+                                            VerticalTextAlignment="Center">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_2" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+
+                                        <Label
+                                            Grid.Row="1"
+                                            FontSize="Small"
+                                            Text="{Binding PageText}"
+                                            TextColor="#A0E870"
+                                            VerticalTextAlignment="Start">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_2" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                        <Label
+                                            Grid.Row="2"
+                                            FontSize="Medium"
+                                            LineBreakMode="TailTruncation"
+                                            Text="{Binding Text}"
+                                            TextColor="#BCC1C7"
+                                            VerticalTextAlignment="Start">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_2" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                        <ImageButton
+                                            Grid.RowSpan="2"
+                                            Grid.Column="2"
+                                            Aspect="Center"
+                                            Clicked="ImageButton_Clicked_1"
+                                            Source="garbage.png" />
+                                    </Grid>
+                                </Border>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </local:If.False>
+        </local:If>
+    </Grid>
+</ContentPage>

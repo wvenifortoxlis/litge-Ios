@@ -1,0 +1,273 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<DebugType>portable</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
+		<ValidateXcodeVersion>false</ValidateXcodeVersion>
+		<MtouchLink>SdkOnly</MtouchLink>
+		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+		<!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
+
+		<!-- Note for MacCatalyst:
+		The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
+		When specifying both architectures, use the plural <RuntimeIdentifiers> instead of the singular <RuntimeIdentifier>.
+		The Mac App Store will NOT accept apps with ONLY maccatalyst-arm64 indicated;
+		either BOTH runtimes must be indicated or ONLY macatalyst-x64. -->
+		<!-- For example: <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers> -->
+
+		<OutputType>Exe</OutputType>
+		<RootNamespace>LitGe</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<!-- Display name -->
+		<ApplicationTitle>Lit.ge</ApplicationTitle>
+
+		<!-- App Identifier -->
+		<ApplicationId>com.companyname.LitGe</ApplicationId>
+
+		<!-- Versions -->
+		<ApplicationDisplayVersion>2.8.1</ApplicationDisplayVersion>
+		<ApplicationVersion>131</ApplicationVersion>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">12.3</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<CheckEolWorkloads>false</CheckEolWorkloads>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
+	  <AndroidPackageFormat>aab</AndroidPackageFormat>
+	  <AndroidUseAapt2>True</AndroidUseAapt2>
+	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+	  <ApplicationDisplayVersion>2.8.1</ApplicationDisplayVersion>
+	  <ApplicationId>com.companyname.LitGe</ApplicationId>
+	  <AndroidTargetSdkVersion>34</AndroidTargetSdkVersion>
+	  <ApplicationVersion>131</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
+	  <AndroidUseAapt2>True</AndroidUseAapt2>
+	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	  <ApplicationDisplayVersion>1.5.35</ApplicationDisplayVersion>
+	  <ApplicationId>com.companyname.LitGe</ApplicationId>
+	  <ApplicationVersion>43</ApplicationVersion>
+	</PropertyGroup>
+		
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
+	  <ApplicationDisplayVersion>1.5.35</ApplicationDisplayVersion>
+	  <ApplicationId>com.companyname.LitGe</ApplicationId>
+	  <ApplicationVersion>43</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
+	  <ApplicationDisplayVersion>1.5.35</ApplicationDisplayVersion>
+	  <ApplicationId>com.companyname.LitGe</ApplicationId>
+	  <ApplicationVersion>43</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|AnyCPU'">
+	  <ApplicationDisplayVersion>1.5.35</ApplicationDisplayVersion>
+	  <ApplicationId>com.companyname.LitGe</ApplicationId>
+	  <ApplicationVersion>43</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
+	  <ApplicationDisplayVersion>1.5.35</ApplicationDisplayVersion>
+	  <ApplicationId>com.companyname.LitGe</ApplicationId>
+	  <ApplicationVersion>43</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
+	  <ApplicationDisplayVersion>1.5.35</ApplicationDisplayVersion>
+	  <ApplicationId>com.companyname.LitGe</ApplicationId>
+	  <ApplicationVersion>43</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
+	  <ApplicationDisplayVersion>1.5.35</ApplicationDisplayVersion>
+	  <ApplicationId>com.companyname.LitGe</ApplicationId>
+	  <ApplicationVersion>43</ApplicationVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Remove="FakesAssemblies\**" />
+	  <EmbeddedResource Remove="FakesAssemblies\**" />
+	  <MauiCss Remove="FakesAssemblies\**" />
+	  <MauiXaml Remove="FakesAssemblies\**" />
+	  <None Remove="FakesAssemblies\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\AppIcon\appicon.png" />
+	  <None Remove="resources\images\alert.svg" />
+	  <None Remove="resources\images\back_arrow.svg" />
+	  <None Remove="resources\images\back_arrow_black.svg" />
+	  <None Remove="resources\images\bookmark_add.svg" />
+	  <None Remove="resources\images\bookmark_add_green.svg" />
+	  <None Remove="resources\images\check.svg" />
+	  <None Remove="resources\images\chevron_right.svg" />
+	  <None Remove="resources\images\dotpoints.svg" />
+	  <None Remove="resources\images\empty_book.svg" />
+	  <None Remove="resources\images\exit.svg" />
+	  <None Remove="resources\images\filter.svg" />
+	  <None Remove="resources\images\grid_icon.svg" />
+	  <None Remove="Resources\Images\hide.png" />
+	  <None Remove="resources\images\logo.svg" />
+	  <None Remove="resources\images\main_text.svg" />
+	  <None Remove="Resources\Images\moon.svg" />
+	  <None Remove="Resources\Images\no_books.svg" />
+	  <None Remove="Resources\Images\open_book.svg" />
+	  <None Remove="resources\images\password.svg" />
+	  <None Remove="resources\images\person.svg" />
+	  <None Remove="resources\images\play.svg" />
+	  <None Remove="Resources\Images\random_dots.svg" />
+	  <None Remove="resources\images\search.svg" />
+	  <None Remove="resources\images\search_white.svg" />
+	  <None Remove="resources\images\smile.svg" />
+	  <None Remove="Resources\Images\visible.png" />
+	  <None Remove="resources\images\x_icon.svg" />
+	  <None Remove="resources\images\x_icon_black.svg" />
+	  <None Remove="Resources\Raw\test1.html" />
+	  <None Remove="Resources\Splash\books.svg" />
+	  <None Remove="Resources\Splash\Subtract.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.2" />
+		<PackageReference Include="HtmlAgilityPack" Version="1.11.61" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.*" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.*" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.*" />
+		<PackageReference Include="Mopups" Version="1.3.1" />
+		<PackageReference Include="Plugin.Maui.Audio" Version="3.0.1" />
+		<PackageReference Include="RandomString4Net" Version="1.8.0" />
+		<PackageReference Include="SharpZipLib" Version="1.4.2" />
+		<PackageReference Include="Ugt.Library" Version="1.0.1.1" />
+		<PackageReference Include="Flurl" Version="3.0.7" />
+		<PackageReference Include="Flurl.Http" Version="3.2.4" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Serilog" Version="3.1.1" />
+		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+	</ItemGroup>
+
+	<!-- Android Specific 16KB Memory Page Support -->
+	<ItemGroup Condition="$(TargetFramework.Contains('-android'))">
+		<PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.10" />
+		<PackageReference Include="SQLitePCLRaw.core" Version="2.1.10" />
+		<PackageReference Include="SQLitePCLRaw.lib.e_sqlite3.android" Version="2.1.10" />
+		<PackageReference Include="SQLitePCLRaw.provider.e_sqlite3" Version="2.1.10" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Pages\BookmarksModal.xaml.cs">
+	    <DependentUpon>BookmarksModal.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Popups\AudioBookChaptersPopup.xaml.cs">
+	    <DependentUpon>AudioBookChaptersPopup.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Popups\DictionaryPopup.xaml.cs">
+	    <DependentUpon>DictionaryPopup.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Popups\FontPopup.xaml.cs">
+	    <DependentUpon>FontPopup.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <MauiXaml Update="Pages\Authenticator.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\BookmarksModal.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\BooksPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\BooksSeachPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\NoInternetRealm.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Popups\AudioBookChaptersPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Popups\DownloadChaptersPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Popups\FontPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Loading.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\ModalReader.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\ProfilePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\ReaderPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Popups\DictionaryPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
+
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionLitGeHideInfoBar="True" XamarinHotReloadUnhandledDeviceExceptionLitGeHideInfoBar="True" /></VisualStudio></ProjectExtensions>
+
+
+	<ItemGroup>
+	  <AdditionalDesignTimeBuildInput Remove="FakesAssemblies\**" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <None Include="..\.editorconfig" Link=".editorconfig" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <MauiIcon Include="Resources\AppIcon\appicon.png" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <MauiSplashScreen Include="Resources\Splash\subtract.svg" Color="#80C554" />
+	  <LinkerRootDescriptor Include="LinkerConfig.xml" />
+	</ItemGroup>
+
+</Project>

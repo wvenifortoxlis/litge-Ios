@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="LitGe.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:LitGe"
+    xmlns:pages="clr-namespace:LitGe.Pages">
+
+    <ShellContent
+        Title="Main"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage"
+        Shell.FlyoutBehavior="Disabled"
+        Shell.NavBarIsVisible="False" />
+
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate pages:LoginPage}"
+        Route="LoginPage"
+        Shell.FlyoutBehavior="Disabled" />
+
+    <TabBar
+        Shell.TabBarBackgroundColor="{DynamicResource Background}"
+        Shell.TabBarForegroundColor="{DynamicResource HighlightedItem}"
+        Shell.TabBarTitleColor="{DynamicResource HighlightedItem}"
+        Shell.TabBarUnselectedColor="{DynamicResource DarkerBackground}">
+        <ShellContent
+            Title="წიგნები"
+            ContentTemplate="{DataTemplate pages:BooksPage}"
+            Icon="open_book.svg"
+            Route="BooksPage" />
+
+        <ShellContent
+            Title="განაგრძე"
+            ContentTemplate="{DataTemplate pages:ReaderPage}"
+            Icon="play.svg"
+            Shell.NavBarIsVisible="False" />
+
+        <ShellContent
+            Title="პროფილი"
+            ContentTemplate="{DataTemplate pages:ProfilePage}"
+            Icon="person.svg"
+            Shell.BackgroundColor="{DynamicResource Background}" />
+    </TabBar>
+</Shell>

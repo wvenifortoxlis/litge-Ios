@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<mct:Popup
+    x:Class="LitGe.Popups.AudioBookChaptersPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:pages="clr-namespace:LitGe.Pages"
+    xmlns:popups="clr-namespace:LitGe.Popups"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:DataType="popups:AudioBookChaptersPopup"
+    CanBeDismissedByTappingOutsideOfPopup="True"
+    VerticalOptions="End"
+    Color="Transparent">
+
+    <Border
+        Padding="0"
+        BackgroundColor="#31363C"
+        HorizontalOptions="Fill"
+        VerticalOptions="Fill">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="30,30,0,0" />
+        </Border.StrokeShape>
+
+        <Grid
+            Padding="15,10,15,5"
+            ColumnDefinitions=".9*,.1*"
+            RowDefinitions=".07*,.8*,0.1*">
+            <Label
+                FontAttributes="Bold"
+                FontSize="Large"
+                Text="სარჩევი"
+                TextColor="{DynamicResource TextColor}"
+                VerticalTextAlignment="Center" />
+            <ImageButton
+                Grid.Column="1"
+                Aspect="Center"
+                Command="{Binding CloseCommand}"
+                Source="x_icon.svg" />
+            <ListView
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                ItemsSource="{Binding Chapters}"
+                SelectionMode="None"
+                SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="pages:AudioBookChapters">
+                        <ViewCell>
+                            <Grid BackgroundColor="Transparent" ColumnDefinitions="Auto, *, Auto">
+                                <BoxView
+                                    Grid.Column="0"
+                                    Margin="0,10"
+                                    BackgroundColor="{Binding Color}"
+                                    HorizontalOptions="Start"
+                                    IsVisible="{Binding IsActive}"
+                                    VerticalOptions="Fill"
+                                    WidthRequest="2" />
+                                <Label
+                                    Grid.Column="1"
+                                    Margin="15,0,0,0"
+                                    BackgroundColor="Transparent"
+                                    FontSize="Medium"
+                                    HorizontalOptions="Fill"
+                                    Text="{Binding Text}"
+                                    TextColor="{Binding Color}"
+                                    VerticalOptions="Fill"
+                                    VerticalTextAlignment="Center">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="Chapter_Tapped" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <ImageButton
+                                    Grid.Column="2"
+                                    Aspect="Center"
+                                    HeightRequest="40"
+                                    WidthRequest="40"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type popups:AudioBookChaptersPopup}}, Path=ActionCommand}"
+                                    CommandParameter="{Binding .}"
+                                    HorizontalOptions="End"
+                                    Source="{Binding Icon}" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                Padding="5,10,5,15">
+                <Button
+                    BackgroundColor="#272C31"
+                    Command="{Binding DownloadAllCommand}"
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    ImageSource="download_chapter_white.png"
+                    Text="სრულად ჩამოტვირთვა"
+                    TextColor="White" />
+            </Grid>
+        </Grid>
+    </Border>
+
+</mct:Popup>

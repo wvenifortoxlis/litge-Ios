@@ -1,0 +1,503 @@
+<ContentPage
+    x:Class="LitGe.Pages.BooksPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:if="clr-namespace:LitGe.Lib"
+    xmlns:local="clr-namespace:LitGe.Pages"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    BackgroundColor="White"
+    Shell.BackgroundColor="White"
+    Shell.NavBarHasShadow="False">
+
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,5*,*">
+            <Grid Grid.Column="0">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                </Grid.GestureRecognizers>
+                <Image
+                    x:Name="search"
+                    Aspect="AspectFit"
+                    HeightRequest="24"
+                    HorizontalOptions="Start"
+                    Source="search"
+                    WidthRequest="24">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="search_Clicked" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <Label
+                    FontAttributes="Bold"
+                    FontAutoScalingEnabled="False"
+                    FontSize="Large"
+                    HorizontalTextAlignment="Center"
+                    Text="ჩემი წიგნები"
+                    TextColor="Black"
+                    VerticalTextAlignment="Center" />
+            </Grid>
+
+            <Grid Grid.Column="2">
+                <Image
+                    x:Name="filter"
+                    Aspect="AspectFit"
+                    HeightRequest="25"
+                    Source="grid_icon"
+                    WidthRequest="25">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="filter_Clicked" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </Grid>
+        </Grid>
+    </Shell.TitleView>
+    <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
+        <Grid toolkit:StateContainer.CurrentState="{Binding State}">
+            <toolkit:StateContainer.StateViews>
+                <CollectionView
+                    x:Name="horizontal"
+                    toolkit:StateView.StateKey="Vertical"
+                    Background="Transparent"
+                    ItemsLayout="VerticalGrid,3"
+                    ItemsSource="{Binding Books}"
+                    SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Image
+                                    HeightRequest="150"
+                                    WidthRequest="100">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="book_selected" CommandParameter="{Binding}" />
+                                    </Image.GestureRecognizers>
+                                    <Image.Source>
+                                        <UriImageSource
+                                            CacheValidity="00:00:02:00"
+                                            CachingEnabled="True"
+                                            Uri="{Binding CoverImageUrl}" />
+                                    </Image.Source>
+                                    <Image.Shadow>
+                                        <Shadow
+                                            Brush="Gray"
+                                            Opacity="0.5"
+                                            Radius="7"
+                                            Offset="5,10" />
+                                    </Image.Shadow>
+                                </Image>
+                                <Image
+                                    Aspect="AspectFit"
+                                    IsVisible="{Binding IsDownloaded}"
+                                    Source="x_circle_black"
+                                    TranslationX="35"
+                                    VerticalOptions="End">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="delete_icon_Clicked" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+
+                                <Image
+                                    Aspect="AspectFit"
+                                    IsVisible="{Binding NeedDownload}"
+                                    Scale="1.2"
+                                    Source="download_frame"
+                                    TranslationX="35"
+                                    VerticalOptions="End">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="download_icon_Clicked" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+
+                                <Image
+                                    HeightRequest="32"
+                                    HorizontalOptions="Start"
+                                    IsVisible="{Binding IsRented}"
+                                    Source="rented_book"
+                                    TranslationX="20"
+                                    TranslationY="-10"
+                                    VerticalOptions="End"
+                                    WidthRequest="32" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <CollectionView
+                    x:Name="vertical"
+                    toolkit:StateView.StateKey="Horizontal"
+                    Background="Transparent"
+                    ItemsSource="{Binding Books}"
+                    SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid
+                                Padding="10"
+                                ColumnDefinitions=".3*,.6*,.1*"
+                                ColumnSpacing="10">
+                                <Image
+                                    HeightRequest="150"
+                                    WidthRequest="100">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="book_selected" CommandParameter="{Binding}" />
+                                    </Image.GestureRecognizers>
+                                    <Image.Source>
+                                        <UriImageSource
+                                            CacheValidity="1"
+                                            CachingEnabled="True"
+                                            Uri="{Binding CoverImageUrl}" />
+                                    </Image.Source>
+                                    <Image.Shadow>
+                                        <Shadow
+                                            Brush="Gray"
+                                            Opacity="0.5"
+                                            Radius="7"
+                                            Offset="5,10" />
+                                    </Image.Shadow>
+                                </Image>
+                                <Image
+                                    HeightRequest="32"
+                                    HorizontalOptions="Start"
+                                    IsVisible="{Binding IsRented}"
+                                    Source="rented_book"
+                                    TranslationX="10"
+                                    TranslationY="-10"
+                                    VerticalOptions="End"
+                                    WidthRequest="32" />
+                                <VerticalStackLayout
+                                    Grid.Column="1"
+                                    Padding="0,15"
+                                    Spacing="10">
+                                    <VerticalStackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="{Binding}" Tapped="book_selected" />
+                                    </VerticalStackLayout.GestureRecognizers>
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="Large"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding Title}"
+                                        TextColor="{DynamicResource DarkerTextColor}" />
+
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        FontSize="Subtitle"
+                                        Opacity=".8"
+                                        Text="{Binding Author}"
+                                        TextColor="{DynamicResource DarkerTextColor}"
+                                        VerticalTextAlignment="Start" />
+                                </VerticalStackLayout>
+                                <Image
+                                    Grid.Column="2"
+                                    Aspect="Center"
+                                    IsVisible="{Binding IsDownloaded}"
+                                    Opacity="2"
+                                    Source="x_icon_circle_black"
+                                    TranslationY="-50">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="delete_icon_Clicked" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <Image
+                                    Grid.Column="2"
+                                    Aspect="Center"
+                                    IsVisible="{Binding NeedDownload}"
+                                    Opacity=".5"
+                                    Scale="1.2"
+                                    Source="download_chapter"
+                                    TranslationY="-50">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="download_icon_Clicked" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <ScrollView toolkit:StateView.StateKey="Loading" VerticalScrollBarVisibility="Never">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding LoadingMockContainer}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid
+                                    HeightRequest="150"
+                                    Margin="0,0,0,10"
+                                    Padding="20"
+                                    ColumnDefinitions="0.35*,0.65*">
+                                    <local:Skeleteon
+                                        BackgroundColor="LightGray"
+                                        CornerRadius="15"
+                                        HeightRequest="130"
+                                        HorizontalOptions="Start"
+                                        WidthRequest="100" />
+                                    <local:Skeleteon
+                                        Grid.Column="1"
+                                        BackgroundColor="LightGray"
+                                        CornerRadius="5"
+                                        HeightRequest="20"
+                                        VerticalOptions="Start" />
+                                    <local:Skeleteon
+                                        Grid.Column="1"
+                                        BackgroundColor="LightGray"
+                                        CornerRadius="5"
+                                        HeightRequest="20"
+                                        HorizontalOptions="Start"
+                                        TranslationY="40"
+                                        VerticalOptions="Start"
+                                        WidthRequest="100" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </ScrollView>
+
+                <Grid Padding="15,0" toolkit:StateView.StateKey="Empty">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <VerticalStackLayout
+                        Grid.Row="0"
+                        Margin="0,10,0,0"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+                        <Image
+                            HeightRequest="75"
+                            Source="empty_book.svg"
+                            WidthRequest="68" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontAutoScalingEnabled="False"
+                            FontSize="Large"
+                            HorizontalTextAlignment="Center"
+                            Text="წიგნები არ გაქვთ"
+                            TextColor="{DynamicResource DarkerTextColor}" />
+                        <Button
+                            Margin="0,50,0,0"
+                            BackgroundColor="{DynamicResource DarkerBackground}"
+                            FontAttributes="Bold"
+                            FontAutoScalingEnabled="False"
+                            Text="შეიძინე ონლაინ"
+                            TextColor="{DynamicResource TextColor}"
+                            WidthRequest="210">
+                            <Button.Behaviors>
+                                <toolkit:TouchBehavior
+                                    Command="{Binding BuyOnlineCommand}"
+                                    DefaultAnimationDuration="100"
+                                    DefaultAnimationEasing="{x:Static Easing.CubicInOut}"
+                                    PressedOpacity="0.6"
+                                    PressedScale="0.95" />
+                            </Button.Behaviors>
+                        </Button>
+                    </VerticalStackLayout>
+                </Grid>
+            </toolkit:StateContainer.StateViews>
+        </Grid>
+    </RefreshView>
+
+    <!--<if:If Condition="{Binding Empty}">
+        <if:If.True>
+            <Grid Padding="15,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <VerticalStackLayout
+                    Grid.Row="0"
+                    Margin="0,10,0,0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                    <Image
+                        HeightRequest="75"
+                        Source="empty_book.svg"
+                        WidthRequest="68" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontAutoScalingEnabled="False"
+                        FontSize="Large"
+                        HorizontalTextAlignment="Center"
+                        Text="წიგნები არ გაქვთ"
+                        TextColor="{DynamicResource DarkerTextColor}" />
+                    <Button
+                        Margin="0,50,0,0"
+                        BackgroundColor="{DynamicResource DarkerBackground}"
+                        FontAttributes="Bold"
+                        FontAutoScalingEnabled="False"
+                        Text="შეიძინე ონლაინ"
+                        TextColor="{DynamicResource TextColor}"
+                        WidthRequest="210">
+                        <Button.Behaviors>
+                            <toolkit:TouchBehavior
+                                Command="{Binding BuyOnlineCommand}"
+                                DefaultAnimationDuration="100"
+                                DefaultAnimationEasing="{x:Static Easing.CubicInOut}"
+                                PressedOpacity="0.6"
+                                PressedScale="0.95" />
+                        </Button.Behaviors>
+                    </Button>
+                </VerticalStackLayout>
+            </Grid>
+        </if:If.True>
+        <if:If.False>
+            <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
+                <Grid>
+                    <CollectionView
+                        x:Name="horizontal"
+                        Background="Transparent"
+                        IsVisible="False"
+                        ItemsLayout="VerticalGrid,3"
+                        ItemsSource="{Binding Books}"
+                        SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Image
+                                        HeightRequest="150"
+                                        WidthRequest="100">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="book_selected" CommandParameter="{Binding}" />
+                                        </Image.GestureRecognizers>
+                                        <Image.Source>
+                                            <UriImageSource
+                                                CacheValidity="00:00:02:00"
+                                                CachingEnabled="True"
+                                                Uri="{Binding CoverImageUrl}" />
+                                        </Image.Source>
+                                        <Image.Shadow>
+                                            <Shadow
+                                                Brush="Gray"
+                                                Opacity="0.5"
+                                                Radius="7"
+                                                Offset="5,10" />
+                                        </Image.Shadow>
+                                    </Image>
+                                    <Image
+                                        Aspect="Center"
+                                        IsVisible="{Binding IsDownloaded}"
+                                        Source="x_circle_black"
+                                        TranslationX="35"
+                                        VerticalOptions="End">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="delete_icon_Clicked" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
+
+                                    <Image
+                                        Aspect="Center"
+                                        IsVisible="{Binding NeedDownload}"
+                                        Scale="1.2"
+                                        Source="download_frame"
+                                        TranslationX="35"
+                                        VerticalOptions="End">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="download_icon_Clicked" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <CollectionView
+                        x:Name="vertical"
+                        Background="Transparent"
+                        IsVisible="True"
+                        ItemsSource="{Binding Books}"
+                        SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid
+                                    Padding="10"
+                                    ColumnDefinitions=".3*,.6*,.1*"
+                                    ColumnSpacing="10">
+                                    <Image
+                                        HeightRequest="150"
+                                        WidthRequest="100">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="book_selected" CommandParameter="{Binding}" />
+                                        </Image.GestureRecognizers>
+                                        <Image.Source>
+                                            <UriImageSource
+                                                CacheValidity="1"
+                                                CachingEnabled="True"
+                                                Uri="{Binding CoverImageUrl}" />
+                                        </Image.Source>
+                                        <Image.Shadow>
+                                            <Shadow
+                                                Brush="Gray"
+                                                Opacity="0.5"
+                                                Radius="7"
+                                                Offset="5,10" />
+                                        </Image.Shadow>
+                                    </Image>
+                                    <VerticalStackLayout
+                                        Grid.Column="1"
+                                        Padding="0,15"
+                                        Spacing="10">
+                                        <VerticalStackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer CommandParameter="{Binding}" Tapped="book_selected" />
+                                        </VerticalStackLayout.GestureRecognizers>
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="Large"
+                                            LineBreakMode="WordWrap"
+                                            Text="{Binding Title}"
+                                            TextColor="{DynamicResource DarkerTextColor}" />
+
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            FontSize="Subtitle"
+                                            Opacity=".8"
+                                            Text="{Binding Author}"
+                                            TextColor="{DynamicResource DarkerTextColor}"
+                                            VerticalTextAlignment="Start" />
+                                    </VerticalStackLayout>
+                                    <Image
+                                        Grid.Column="2"
+                                        Aspect="AspectFit"
+                                        IsVisible="{Binding IsDownloaded}"
+                                        Opacity="2"
+                                        Source="x_icon_circle_black"
+                                        TranslationY="-50">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="delete_icon_Clicked" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <Image
+                                        Grid.Column="2"
+                                        Aspect="AspectFit"
+                                        IsVisible="{Binding NeedDownload}"
+                                        Opacity=".5"
+                                        Scale="1.2"
+                                        Source="download_chapter"
+                                        TranslationY="-50">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="download_icon_Clicked" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                        </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</RefreshView>
+    -->
+    <!--<VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup Name="CommonStates">
+                                            <VisualState Name="Normal" />
+                                            <VisualState Name="Selected">
+                                                <VisualState.Setters>
+                                                    <Setter Property="BackgroundColor" Value="{DynamicResource Background}" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>-->
+    <!--
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </RefreshView>
+        </if:If.False>
+    </if:If>-->
+</ContentPage>

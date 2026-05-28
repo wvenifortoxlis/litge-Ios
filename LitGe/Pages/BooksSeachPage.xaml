@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="LitGe.Pages.BooksSeachPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:LitGe.Pages"
+    HideSoftInputOnTapped="True"
+    Title="BooksSeachPage"
+    BackgroundColor="White"
+    Shell.BackgroundColor="White"
+    Shell.ForegroundColor="Black"
+    Shell.NavBarHasShadow="False"
+    Shell.TabBarIsVisible="False">
+    <Shell.TitleView>
+        <!--<SearchBar
+            x:Name="SearchBar"
+            IsTextPredictionEnabled="True"
+            Placeholder="წიგნის სათაური..."
+            SearchButtonPressed="SearchBar_SearchButtonPressed"
+            SearchCommand="{Binding PerformSearch}"
+            SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}"
+            TextColor="{DynamicResource DarkerTextColor}"
+            VerticalOptions="Center" />-->
+        <Grid Padding="0,0,25,0" ColumnDefinitions=".2*,.8*">
+            <RoundRectangle
+                Grid.ColumnSpan="2"
+                CornerRadius="50"
+                Fill="{DynamicResource Background}" />
+            <Image
+                Grid.Column="0"
+                HeightRequest="18"
+                HorizontalOptions="Center"
+                Source="search.svg" />
+            <Entry
+                Grid.Column="1"
+                Margin="0,0,10,0"
+                ClearButtonVisibility="WhileEditing"
+                Keyboard="Text"
+                Placeholder="სათაური ან ავტორი ... "
+                PlaceholderColor="Black"
+                TextChanged="Entry_TextChanged"
+                TextColor="Black"
+                VerticalOptions="Center" />
+        </Grid>
+    </Shell.TitleView>
+    <ContentPage.BindingContext>
+        <local:BooksSearchViewModel />
+    </ContentPage.BindingContext>
+    <!--<Grid RowDefinitions="*,9*">-->
+    <!--<Grid Grid.Row="0" ColumnDefinitions="*,6*">
+            <Grid Grid.Column="0">
+                <ImageButton
+                    x:Name="Back"
+                    Clicked="Back_Clicked"
+                    HeightRequest="24"
+                    Source="back_arrow_black.svg"
+                    WidthRequest="24" />
+            </Grid>
+            <Grid Grid.Column="1">
+                <Frame
+                    Margin="0,0,10,0"
+                    Padding="0,5"
+                    BackgroundColor="#dbdbdb"
+                    BorderColor="Transparent"
+                    CornerRadius="40"
+                    VerticalOptions="Center">
+                    <SearchBar
+                        x:Name="SearchBar"
+                        CancelButtonColor="Black"
+                        Placeholder="წიგნის სათაური..."
+                        SearchButtonPressed="SearchBar_SearchButtonPressed"
+                        SearchCommand="{Binding PerformSearch}"
+                        SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}"
+                        TextColor="{DynamicResource DarkerTextColor}"
+                        VerticalOptions="Center" />
+                </Frame>
+            </Grid>
+        </Grid>-->
+    <!--<Grid Grid.Row="1">-->
+    <ListView
+        Margin="0,20,0,0"
+        ItemSelected="ListView_ItemSelected"
+        ItemsSource="{Binding Books}"
+        RowHeight="100"
+        SeparatorVisibility="None">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <Grid Padding="0,5" ColumnDefinitions="*,3*">
+                        <Grid Grid.Column="0">
+                            <Image Source="{Binding CoverImageUrl}" />
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <VerticalStackLayout Spacing="5">
+                                <Label FontSize="Body" LineBreakMode="WordWrap">
+                                    <Label.FormattedText>
+                                        <Binding Path="FormattedTitle" />
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label FontSize="Subtitle" LineBreakMode="WordWrap">
+                                    <Label.FormattedText>
+                                        <Binding Path="FormattedAuthor" />
+                                    </Label.FormattedText>
+                                </Label>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+    <!--</Grid>
+    </Grid>-->
+</ContentPage>

@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="LitGe.Pages.ModalReader"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:LitGe.Pages"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    HideSoftInputOnTapped="True">
+    <Page.Behaviors>
+        <toolkit:StatusBarBehavior x:Name="PageStatusBar" />
+    </Page.Behaviors>
+    <AbsoluteLayout>
+        <Grid
+            x:Name="TopOverlay"
+            AbsoluteLayout.LayoutBounds="0,0,1,0.08"
+            AbsoluteLayout.LayoutFlags="WidthProportional,HeightProportional"
+            BackgroundColor="{DynamicResource DarkerBackground}"
+            ColumnDefinitions="60,60,*,60,60,60"
+            IsVisible="False"
+            ZIndex="1">
+            <Image
+                x:Name="b1"
+                Grid.Column="0"
+                Aspect="AspectFit"
+                HeightRequest="24"
+                Source="back_arrow">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnCloseButtonClicked" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Image
+                x:Name="b2"
+                Grid.Column="1"
+                Aspect="AspectFit"
+                HeightRequest="24"
+                Source="dotpoints"
+                WidthRequest="24">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ImageButton_Clicked_1" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Image
+                x:Name="b3"
+                Grid.Column="3"
+                Aspect="AspectFit"
+                HeightRequest="24"
+                Source="search_white"
+                WidthRequest="24">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="FlickSearchVisibility" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Label
+                x:Name="b4"
+                Grid.Column="4"
+                FontAttributes="Bold"
+                FontSize="Title"
+                HorizontalOptions="Center"
+                Text="Aa"
+                TextColor="{DynamicResource TextColor}"
+                VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1" />
+                </Label.GestureRecognizers>
+            </Label>
+            <!--<Grid
+                x:Name="searchGrid"
+                Grid.ColumnSpan="6"
+                ColumnDefinitions="60,*"
+                IsVisible="False">
+                <ImageButton
+                    Aspect="Center"
+                    Clicked="FlickSearchVisibility"
+                    Source="back_arrow.svg" />
+                <SearchBar
+                    x:Name="SearchBar"
+                    Grid.Column="1"
+                    CancelButtonColor="White"
+                    FontSize="18"
+                    SearchCommand="{Binding SearchCommand}"
+                    SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}"
+                    Text="{Binding SearchText}"
+                    VerticalOptions="Center" />
+            </Grid>-->
+            <Image
+                x:Name="BookmarkButton"
+                Grid.Column="5"
+                Aspect="AspectFit"
+                HeightRequest="24"
+                Source="bookmark_add"
+                WidthRequest="24">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ImageButton_Clicked" />
+                </Image.GestureRecognizers>
+            </Image>
+        </Grid>
+
+        <!--
+            SearchCommand="{Binding SearchCommand}"
+            SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}"
+        -->
+        <Grid
+            x:Name="SearchWindow"
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            BackgroundColor="{DynamicResource DarkerBackground}"
+            IsVisible="False"
+            RowDefinitions=".1*,.9*"
+            ZIndex="2">
+            <Grid
+                Grid.Row="0"
+                Padding="20,20,0,0"
+                ColumnDefinitions=".7*,.3*">
+                <RoundRectangle CornerRadius="50" Fill="#282B32" />
+
+                <SearchBar
+                    x:Name="SearchBar"
+                    Grid.Column="0"
+                    CancelButtonColor="#5F6269"
+                    FontAutoScalingEnabled="False"
+                    FontSize="Large"
+                    Placeholder="იპოვე . . ."
+                    SearchCommand="{Binding SearchCommand}"
+                    SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}"
+                    Text="{Binding SearchText}"
+                    TextChanged="SearchBar_TextChanged"
+                    TextColor="{DynamicResource TextColor}"
+                    VerticalOptions="Center" />
+                <Button
+                    Grid.Column="1"
+                    Background="Transparent"
+                    Clicked="Button_Clicked"
+                    FontAutoScalingEnabled="False"
+                    FontSize="Large"
+                    HorizontalOptions="Center"
+                    Text="დახურვა"
+                    TextColor="{DynamicResource TextColor}" />
+            </Grid>
+            <Grid Grid.Row="1" Padding="10,20,10,0">
+                <ListView
+                    ItemSelected="ListView_ItemSelected"
+                    ItemsSource="{Binding PagesWithOccurances}"
+                    RowHeight="60">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Padding="10,5" Spacing="5">
+                                    <Label
+                                        FontSize="Small"
+                                        Text="{Binding Detail}"
+                                        TextColor="{DynamicResource TextColor}" />
+                                    <Label
+                                        FontSize="Body"
+                                        LineBreakMode="TailTruncation"
+                                        Text="{Binding Text}"
+                                        TextColor="{DynamicResource TextColor}"
+                                        TextType="Html" />
+
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup Name="CommonStates">
+                                            <VisualState Name="Normal" />
+                                            <VisualState Name="Selected">
+                                                <VisualState.Setters>
+                                                    <Setter Property="BackgroundColor" Value="{DynamicResource Background}" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <Image
+                    Aspect="Center"
+                    HorizontalOptions="Center"
+                    IsVisible="{Binding SearchIsEmpty}"
+                    Scale="1.5"
+                    Source="empty_background.png"
+                    VerticalOptions="Center" />
+                <Image
+                    Aspect="Center"
+                    HorizontalOptions="Center"
+                    IsVisible="{Binding SearchIsEmpty}"
+                    Scale="1.5"
+                    Source="empty_book.png"
+                    VerticalOptions="Center" />
+                <Label
+                    FontSize="Large"
+                    HorizontalOptions="Center"
+                    IsVisible="{Binding SearchIsEmpty}"
+                    Text="შედეგები არ მოიძებნა"
+                    TextColor="White"
+                    TranslationY="70"
+                    VerticalOptions="Center" />
+            </Grid>
+        </Grid>
+
+        <Grid
+            x:Name="MainContent"
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            BackgroundColor="{DynamicResource ReaderBackground}"
+            RowDefinitions="*">
+            <Grid
+                x:Name="CoverImage"
+                BackgroundColor="{DynamicResource ReaderBackground}"
+                ZIndex="1">
+                <Image x:Name="CImage">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                        <SwipeGestureRecognizer Direction="Left" Swiped="SwipeGestureRecognizer_Swiped" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <ActivityIndicator
+                    x:Name="Loading"
+                    HorizontalOptions="Center"
+                    IsRunning="True"
+                    IsVisible="True"
+                    VerticalOptions="Center" />
+            </Grid>
+            <CarouselView
+                x:Name="Carousel"
+                Margin="0,10,0,10"
+                IsVisible="False"
+                ItemsSource="{Binding ParsedChapters}"
+                Loop="False"
+                Position="{Binding LastVisitedPage}"
+                PositionChanged="Carousel_PositionChanged">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout
+                            Padding="15,0,15,40"
+                            BackgroundColor="{DynamicResource ReaderBackground}"
+                            BindableLayout.ItemsSource="{Binding Labels}">
+                            <VerticalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="TapGestureRecognizer_Tapped" />
+                            </VerticalStackLayout.GestureRecognizers>
+                            
+                            <Image
+                                IsVisible="{Binding IsVisible}"
+                                MaximumHeightRequest="200"
+                                Source="{Binding ImgPath}" />
+
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Label
+                                        FontAutoScalingEnabled="False"
+                                        FontSize="{Binding Source={RelativeSource AncestorType={x:Type local:ModalReaderViewModel}}, Path=FontSize}"
+                                        HorizontalTextAlignment="{Binding Source={RelativeSource AncestorType={x:Type local:ModalReaderViewModel}}, Path=Alignment}"
+                                        LineBreakMode="WordWrap"
+                                        LineHeight="1.2"
+                                        Text="{Binding .}"
+                                        TextColor="{DynamicResource ReaderTextColor}"
+                                        TextType="Html">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_2" />
+                                            <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="TapGestureRecognizer_Tapped" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+        </Grid>
+
+        <Grid
+            x:Name="BottomOverlay"
+            Padding="15,5"
+            AbsoluteLayout.LayoutBounds="0,1,1,0.20"
+            AbsoluteLayout.LayoutFlags="WidthProportional,HeightProportional,PositionProportional"
+            BackgroundColor="{DynamicResource DarkerBackground}"
+            IsVisible="False"
+            RowDefinitions="*,*,*,*"
+            ZIndex="1">
+
+            <Label
+                Grid.Row="0"
+                FontAttributes="Bold"
+                FontSize="Large"
+                Text="{Binding Book.Title}"
+                TextColor="{DynamicResource TextColor}"
+                VerticalOptions="End" />
+            <Label
+                Grid.Row="1"
+                Text="{Binding Book.Author}"
+                TextColor="Gray" />
+            <Label
+                Grid.Row="2"
+                Text="{Binding CurrentPageDisplay}"
+                TextColor="{DynamicResource TextColor}" />
+            <Slider
+                x:Name="FontSlider"
+                Grid.Row="3"
+                DragCompleted="FontSlider_DragCompleted"
+                IsEnabled="False"
+                Maximum="{Binding Pages}"
+                MaximumTrackColor="White"
+                Minimum="1"
+                MinimumTrackColor="Green"
+                ThumbColor="Green"
+                VerticalOptions="Start"
+                Value="{Binding CurrentPage}" />
+        </Grid>
+
+        <Grid
+            x:Name="AudioPlayerLayout"
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            BackgroundColor="White"
+            IsVisible="False"
+            RowDefinitions="0.05*,0.6*,0.05*,0.05*,0.05*,0.2*">
+            <Grid
+                Grid.Row="0"
+                Padding="5,0"
+                ColumnDefinitions="0.1*,0.8*,0.1*">
+                <Image
+                    Grid.Column="0"
+                    Aspect="AspectFit"
+                    Scale="1.3"
+                    Source="back_arrow_black">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnCloseButtonClicked" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Label
+                    Grid.Column="1"
+                    FontAttributes="Bold"
+                    FontSize="Large"
+                    HorizontalOptions="Center"
+                    Text="{Binding Book.Title}"
+                    TextColor="{DynamicResource DarkerTextColor}"
+                    VerticalOptions="Center" />
+                <Image
+                    Grid.Column="2"
+                    Aspect="AspectFit"
+                    HeightRequest="24" WidthRequest="24"
+                    Source="download.png">
+                    <Image.Behaviors>
+                        <toolkit:TouchBehavior
+                            Command="{Binding DownloadAllChapterCommand}"
+                            DefaultAnimationDuration="100"
+                            DefaultAnimationEasing="{x:Static Easing.CubicInOut}"
+                            PressedOpacity="0.6"
+                            PressedScale="0.95" />
+                    </Image.Behaviors>
+                </Image>
+            </Grid>
+            <Grid Grid.Row="1">
+                <ActivityIndicator
+                    IsRunning="{Binding IsBusy}"
+                    IsVisible="{Binding IsBusy}"
+                    WidthRequest="69"
+                    ZIndex="1"
+                    Color="#9FE879" />
+                <Image HeightRequest="400" WidthRequest="300">
+                    <Image.Source>
+                        <UriImageSource CacheValidity="01:00:00:00" Uri="{Binding Book.CoverImageUrl}" />
+                    </Image.Source>
+                    <Image.Clip>
+                        <RoundRectangleGeometry CornerRadius="10" Rect="0,0,300,400" />
+                    </Image.Clip>
+                </Image>
+            </Grid>
+            <Grid Grid.Row="2" ColumnDefinitions="0.15*,0.85*">
+                <Image Aspect="AspectFit" HeightRequest="24" WidthRequest="24" Source="list.png">
+                    <Image.Behaviors>
+                        <toolkit:TouchBehavior
+                            Command="{Binding RenderAudioChaptersPopupCommand}"
+                            DefaultAnimationDuration="100"
+                            DefaultAnimationEasing="{x:Static Easing.CubicInOut}"
+                            PressedOpacity="0.6"
+                            PressedScale="0.95" />
+                    </Image.Behaviors>
+                </Image>
+                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        Text="{Binding AudioCurrentChapter}"
+                        TextColor="{DynamicResource DarkerTextColor}" />
+                    <Label
+                        FontSize="Small"
+                        Opacity="0.5"
+                        Text="{Binding AudioTotalChapterText}"
+                        TextColor="{DynamicResource DarkerTextColor}" />
+                </VerticalStackLayout>
+
+            </Grid>
+            <Grid Grid.Row="3" Padding="10,10,10,0">
+                <Slider
+                    x:Name="AudioSlider"
+                    DragCompletedCommand="{Binding SliderDragCompletedCommand}"
+                    DragStartedCommand="{Binding SliderDragStartedCommand}"
+                    Maximum="{Binding AudioTotalLength}"
+                    MaximumTrackColor="#EDEFEB"
+                    MinimumTrackColor="#9FE879"
+                    ThumbColor="#9FE870"
+                    ValueChanged="AudioSlider_ValueChanged"
+                    Value="{Binding AudioCurrentPosition}" />
+            </Grid>
+            <Grid Grid.Row="4" ColumnDefinitions="0.2*,*,0.2*">
+                <Label
+                    Grid.Column="0"
+                    HorizontalOptions="End"
+                    Opacity=".5"
+                    Text="{Binding AudioCurrentPositionFormated}"
+                    TextColor="{DynamicResource DarkerTextColor}" />
+                <Label
+                    Grid.Column="2"
+                    HorizontalOptions="Start"
+                    Opacity=".5"
+                    Text="{Binding AudioTotalLengthFormated}"
+                    TextColor="{DynamicResource DarkerTextColor}" />
+            </Grid>
+            <Grid Grid.Row="5" ColumnDefinitions="0.2*,0.2*,0.2*,0.2*,0.2*">
+                <Image
+                    Grid.Column="0"
+                    Aspect="AspectFit"
+                    HeightRequest="32" WidthRequest="32"
+                    IsEnabled="{Binding PreviousChapterButtonEnabled}"
+                    Source="left_triangle.png">
+                    <Image.Behaviors>
+                        <toolkit:TouchBehavior
+                            Command="{Binding LoadPreviousChapter}"
+                            DefaultAnimationDuration="100"
+                            DefaultAnimationEasing="{x:Static Easing.CubicInOut}"
+                            PressedOpacity="0.6"
+                            PressedScale="0.95" />
+                    </Image.Behaviors>
+                </Image>
+                <Image
+                    Grid.Column="1"
+                    Aspect="AspectFit"
+                    HeightRequest="32" WidthRequest="32"
+                    Source="skip_back">
+                    <Image.Behaviors>
+                        <toolkit:TouchBehavior
+                            Command="{Binding SkipBackwardCommand}"
+                            DefaultAnimationDuration="100"
+                            DefaultAnimationEasing="{x:Static Easing.CubicInOut}"
+                            PressedOpacity="0.6"
+                            PressedScale="0.95" />
+                    </Image.Behaviors>
+                </Image>
+                <Image
+                    x:Name="PlayerPlayPauseIcon"
+                    Grid.Column="2"
+                    Aspect="AspectFit"
+                    HeightRequest="48" WidthRequest="48"
+                    Source="{Binding PlayIcon, FallbackValue='playing'}">
+                    <Image.Behaviors>
+                        <toolkit:TouchBehavior
+                            Command="{Binding PlayPauseCommand}"
+                            DefaultAnimationDuration="100"
+                            DefaultAnimationEasing="{Static Member=Easing.CubicInOut}"
+                            PressedOpacity="0.6"
+                            PressedScale="0.9" />
+                    </Image.Behaviors>
+                </Image>
+                <Image
+                    Grid.Column="3"
+                    Aspect="AspectFit"
+                    HeightRequest="32" WidthRequest="32"
+                    Source="skip_forward">
+                    <Image.Behaviors>
+                        <toolkit:TouchBehavior
+                            Command="{Binding SkipForwardCommand}"
+                            DefaultAnimationDuration="100"
+                            DefaultAnimationEasing="{x:Static Easing.CubicInOut}"
+                            PressedOpacity="0.6"
+                            PressedScale="0.95" />
+                    </Image.Behaviors>
+                </Image>
+                <Image
+                    Grid.Column="4"
+                    Aspect="AspectFit"
+                    HeightRequest="32" WidthRequest="32"
+                    IsEnabled="{Binding NextChapterButtonEnabled}"
+                    Source="right_triangle.png">
+                    <Image.Behaviors>
+                        <toolkit:TouchBehavior
+                            Command="{Binding LoadNextChapter}"
+                            DefaultAnimationDuration="100"
+                            DefaultAnimationEasing="{x:Static Easing.CubicInOut}"
+                            PressedOpacity="0.6"
+                            PressedScale="0.95" />
+                    </Image.Behaviors>
+                </Image>
+            </Grid>
+        </Grid>
+    </AbsoluteLayout>
+</ContentPage>

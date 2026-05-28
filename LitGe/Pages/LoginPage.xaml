@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="LitGe.Pages.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:LitGe.Pages"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Title="შესვლა"
+    BackgroundColor="{DynamicResource Background}"
+    HideSoftInputOnTapped="True"
+    Shell.BackgroundColor="{DynamicResource Background}"
+    Shell.ForegroundColor="{DynamicResource DarkerBackground}"
+    Shell.NavBarHasShadow="True"
+    Shell.TitleColor="{DynamicResource DarkerTextColor}">
+    <ContentPage.BindingContext>
+        <local:LoginVM />
+    </ContentPage.BindingContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <StackLayout
+            Grid.Row="0"
+            Padding="20"
+            Spacing="20">
+
+            <Grid
+                x:Name="ErrorState"
+                HeightRequest="53"
+                IsVisible="False">
+                <Border BackgroundColor="#F8D7DA" Stroke="#FBBCBD">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10,10,10,10" />
+                    </Border.StrokeShape>
+                    <HorizontalStackLayout Padding="20,0,0,0" Spacing="10">
+                        <Image Source="alert.svg" />
+                        <Label
+                            Text="მომხმარებელი ან პაროლი არასწორია"
+                            TextColor="Black"
+                            VerticalTextAlignment="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+            </Grid>
+            <StackLayout>
+                <Label
+                    x:Name="SnakAnchor"
+                    Margin="15,0,0,5"
+                    FontSize="Medium"
+                    Text="მომხმარებელი"
+                    TextColor="{DynamicResource DarkerTextColor}" />
+                <Frame
+                    x:Name="FrameUsername"
+                    Padding="1"
+                    BackgroundColor="LightGray"
+                    BorderColor="#f0f0f0"
+                    CornerRadius="12"
+                    HasShadow="False">
+                    <Grid>
+                        <Entry
+                            x:Name="EntryUsername"
+                            Margin="10,0"
+                            BackgroundColor="#f0f0f0"
+                            Focused="Entry_Focused"
+                            Text="{Binding Username}"
+                            TextColor="{DynamicResource DarkerTextColor}"
+                            Unfocused="Entry_Unfocused" />
+                    </Grid>
+                </Frame>
+            </StackLayout>
+
+            <StackLayout>
+                <Label
+                    Margin="15,0,0,5"
+                    FontSize="Medium"
+                    Text="პაროლი"
+                    TextColor="{DynamicResource DarkerTextColor}" />
+                <Frame
+                    x:Name="FramePassword"
+                    Padding="3"
+                    BackgroundColor="LightGray"
+                    BorderColor="#f0f0f0"
+                    CornerRadius="12"
+                    HasShadow="False">
+                    <Grid>
+                        <Entry
+                            x:Name="EntryPassword"
+                            Margin="10,0"
+                            BackgroundColor="#f0f0f0"
+                            Focused="Entry_Focused"
+                            IsPassword="True"
+                            Text="{Binding Password}"
+                            TextColor="{DynamicResource DarkerTextColor}"
+                            Unfocused="Entry_Unfocused" />
+                        <ImageButton
+                            Margin="0,0,5,0"
+                            BackgroundColor="Transparent"
+                            Clicked="ImageButton_Clicked"
+                            HeightRequest="24"
+                            HorizontalOptions="End"
+                            Source="hide.png"
+                            VerticalOptions="Center"
+                            WidthRequest="24" />
+                    </Grid>
+                </Frame>
+            </StackLayout>
+        </StackLayout>
+
+        <StackLayout
+            x:Name="BottomLayout"
+            Grid.Row="1"
+            Padding="20"
+            Spacing="20">
+            <Label
+                x:Name="ForgotPassword"
+                FontSize="Body"
+                HorizontalOptions="Center"
+                Text="პაროლი დაგავიწყდათ?"
+                TextColor="{DynamicResource DarkerTextColor}"
+                TextDecorations="Underline"
+                VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Label
+                x:Name="RegistrationLabel"
+                FontSize="Body"
+                HorizontalOptions="Center"
+                Text="რეგისტრაცია"
+                TextColor="{DynamicResource DarkerTextColor}"
+                TextDecorations="Underline"
+                VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Registration_Tapped" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Button
+                x:Name="LoginButton"
+                Clicked="LoginButton_Clicked"
+                FontSize="Large"
+                HorizontalOptions="FillAndExpand"
+                Text="შესვლა"
+                TextColor="{DynamicResource TextColor}">
+                <Button.Triggers>
+                    <Trigger TargetType="Button" Property="IsPressed" Value="True">
+                        <Setter Property="BackgroundColor" Value="DarkGray" />
+                    </Trigger>
+                    <Trigger TargetType="Button" Property="IsPressed" Value="False">
+                        <Setter Property="BackgroundColor" Value="#31363C" />
+                    </Trigger>
+                </Button.Triggers>
+            </Button>
+        </StackLayout>
+    </Grid>
+</ContentPage>

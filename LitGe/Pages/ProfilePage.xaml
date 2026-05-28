@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="LitGe.Pages.ProfilePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:LitGe.Pages"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    BackgroundColor="{DynamicResource Background}">
+
+    <Shell.TitleView>
+        <Label
+            FontAttributes="Bold"
+            FontAutoScalingEnabled="False"
+            FontSize="Large"
+            HorizontalTextAlignment="Center"
+            Text="პროფილი"
+            TextColor="{DynamicResource DarkerTextColor}"
+            VerticalTextAlignment="Center" />
+    </Shell.TitleView>
+
+    <ContentPage.BindingContext>
+        <pages:ProfilePageViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="*,4*">
+        <Grid Grid.Row="0" ColumnDefinitions="1.5*,*">
+            <Grid Grid.Column="0" Padding="15,0">
+                <VerticalStackLayout VerticalOptions="Center">
+                    <Label
+                        FontAttributes="Bold"
+                        FontAutoScalingEnabled="False"
+                        FontSize="Title"
+                        LineBreakMode="CharacterWrap"
+                        Text="{Binding Session.DisplayName}"
+                        TextColor="{DynamicResource DarkerTextColor}" />
+                    <Label Text="{Binding Session.Email}" TextColor="{DynamicResource DarkerTextColor}" />
+                </VerticalStackLayout>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Border
+                    BackgroundColor="{DynamicResource DarkerBackground}"
+                    HeightRequest="36"
+                    WidthRequest="132">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15" />
+                    </Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding LogoutCommand}" />
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout
+                        HorizontalOptions="Center"
+                        Spacing="5"
+                        VerticalOptions="Center">
+                        <Label
+                            HorizontalTextAlignment="Center"
+                            Text="გამოსვლა"
+                            TextColor="{DynamicResource TextColor}"
+                            VerticalTextAlignment="Center" />
+
+                        <Image Source="exit.svg" />
+                    </HorizontalStackLayout>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <Grid
+            Grid.Row="1"
+            Padding="10,30,10,0"
+            BackgroundColor="White">
+            <!--<VerticalStackLayout Spacing="20">
+                <Grid ColumnDefinitions="*,4*,*">
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ThemeCommand}" />
+                    </Grid.GestureRecognizers>
+
+                    <Grid.Behaviors>
+                        <toolkit:TouchBehavior
+                            DefaultAnimationDuration="100"
+                            DefaultAnimationEasing="{x:Static Easing.CubicInOut}"
+                            PressedOpacity="0.6"
+                            PressedScale="0.95" />
+                    </Grid.Behaviors>
+
+                    <toolkit:AvatarView
+                        Grid.Column="0"
+                        Padding="20"
+                        BackgroundColor="{DynamicResource Background}"
+                        CornerRadius="50"
+                        HeightRequest="69"
+                        ImageSource="moon.svg"
+                        WidthRequest="69" />
+
+                    <Label
+                        Grid.Column="1"
+                        Padding="15,0,0,0"
+                        FontAttributes="Bold"
+                        FontAutoScalingEnabled="False"
+                        FontSize="Medium"
+                        Text="მუქი ფონი"
+                        TextColor="{DynamicResource DarkerTextColor}"
+                        VerticalTextAlignment="Center" />
+
+                    <Image
+                        Grid.Column="2"
+                        HeightRequest="18"
+                        Source="chevron_right.svg"
+                        WidthRequest="18" />
+                </Grid>
+
+                <Grid ColumnDefinitions="*,4*,*">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding PersonalInformationCommand}" />
+                    </Grid.GestureRecognizers>
+
+                    <Grid.Behaviors>
+                        <toolkit:TouchBehavior
+                            DefaultAnimationDuration="100"
+                            DefaultAnimationEasing="{x:Static Easing.CubicInOut}"
+                            PressedOpacity="0.6"
+                            PressedScale="0.95" />
+                    </Grid.Behaviors>
+
+                    <toolkit:AvatarView
+                        Grid.Column="0"
+                        Padding="20"
+                        BackgroundColor="{DynamicResource Background}"
+                        CornerRadius="50"
+                        HeightRequest="69"
+                        ImageSource="smile.svg"
+                        WidthRequest="69" />
+
+                    <Label
+                        Grid.Column="1"
+                        Padding="15,0,0,0"
+                        FontAttributes="Bold"
+                        FontAutoScalingEnabled="False"
+                        FontSize="Medium"
+                        Text="პირადი ინფორმაცია"
+                        TextColor="{DynamicResource DarkerTextColor}"
+                        VerticalTextAlignment="Center" />
+
+                    <Image
+                        Grid.Column="2"
+                        HeightRequest="18"
+                        Source="chevron_right.svg"
+                        WidthRequest="18" />
+                </Grid>
+
+                <Grid ColumnDefinitions="*,4*,*">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangePasswordCommand}" />
+                    </Grid.GestureRecognizers>
+
+                    <Grid.Behaviors>
+                        <toolkit:TouchBehavior
+                            DefaultAnimationDuration="100"
+                            DefaultAnimationEasing="{x:Static Easing.CubicInOut}"
+                            PressedOpacity="0.6"
+                            PressedScale="0.95" />
+                    </Grid.Behaviors>
+
+                    <toolkit:AvatarView
+                        Grid.Column="0"
+                        Padding="17,20"
+                        BackgroundColor="{DynamicResource Background}"
+                        CornerRadius="50"
+                        HeightRequest="69"
+                        ImageSource="password.svg"
+                        WidthRequest="69" />
+
+                    <Label
+                        Grid.Column="1"
+                        Padding="15,0,0,0"
+                        FontAttributes="Bold"
+                        FontAutoScalingEnabled="False"
+                        FontSize="Medium"
+                        Text="პაროლის შეცვლა"
+                        TextColor="{DynamicResource DarkerTextColor}"
+                        VerticalTextAlignment="Center" />
+
+                    <Image
+                        Grid.Column="2"
+                        HeightRequest="18"
+                        Source="chevron_right.svg"
+                        WidthRequest="18" />
+                </Grid>
+            </VerticalStackLayout>-->
+        </Grid>
+    </Grid>
+</ContentPage>
