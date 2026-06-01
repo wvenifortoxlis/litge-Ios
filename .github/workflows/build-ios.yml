@@ -25,15 +25,16 @@ jobs:
 
       - name: Install .NET MAUI Workloads
         run: |
-          echo "=== Xcode versions installed ==="
-          ls -la /Applications | grep -i xcode || true
-          echo "=== Current active Xcode ==="
-          xcode-select -p || true
-          dotnet workload install maui-ios --ignore-failed-sources
+          echo "=== Xcode versions installed ===" | tee build_log.txt
+          ls -la /Applications | grep -i xcode 2>&1 | tee -a build_log.txt || true
+          echo "=== Current active Xcode ===" | tee -a build_log.txt
+          xcode-select -p 2>&1 | tee -a build_log.txt || true
+          echo "=== Installing Workloads ===" | tee -a build_log.txt
+          dotnet workload install maui-ios --ignore-failed-sources 2>&1 | tee -a build_log.txt
 
       - name: Restore dependencies
         run: |
-          echo "=== dotnet --info ===" | tee build_log.txt
+          echo "=== dotnet --info ===" | tee -a build_log.txt
           dotnet --info 2>&1 | tee -a build_log.txt
           echo "=== dotnet workload list ===" | tee -a build_log.txt
           dotnet workload list 2>&1 | tee -a build_log.txt
