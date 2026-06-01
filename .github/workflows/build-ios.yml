@@ -39,7 +39,7 @@ jobs:
       - name: Build and Publish (Unsigned/Ad-hoc IPA)
         run: |
           echo "=== dotnet publish ===" | tee -a build_log.txt
-          dotnet publish LitGe/LitGe.csproj -f net9.0-ios -c Release -p:TargetFrameworks=net9.0-ios -p:RuntimeIdentifier=ios-arm64 -p:EnableCodeSigning=false -p:CodesignKey="" -p:CodesignProvision="" -p:MtouchLink=None 2>&1 | tee -a build_log.txt
+          dotnet publish LitGe/LitGe.csproj -f net9.0-ios -c Release -p:TargetFrameworks=net9.0-ios -p:RuntimeIdentifier=ios-arm64 -p:EnableCodeSigning=false -p:CodesignKey="" -p:CodesignProvision="" -p:MtouchLink=SdkOnly 2>&1 | tee -a build_log.txt
 
       - name: Package IPA manually
         run: |
