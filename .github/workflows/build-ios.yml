@@ -18,13 +18,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Debug: List Xcode versions
-        run: |
-          echo "=== Xcode versions installed ===" | tee -a build_log.txt
-          ls -la /Applications | grep -i xcode | tee -a build_log.txt
-          echo "=== Current active Xcode ===" | tee -a build_log.txt
-          xcode-select -p | tee -a build_log.txt
-
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
