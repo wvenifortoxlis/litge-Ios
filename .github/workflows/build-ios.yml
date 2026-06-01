@@ -30,7 +30,7 @@ jobs:
           echo "=== Current active Xcode ===" | tee -a build_log.txt
           xcode-select -p 2>&1 | tee -a build_log.txt || true
           echo "=== Installing Workloads ===" | tee -a build_log.txt
-          dotnet workload install maui-ios --ignore-failed-sources 2>&1 | tee -a build_log.txt
+          dotnet workload install maui-ios --skip-manifest-update --ignore-failed-sources 2>&1 | tee -a build_log.txt
 
       - name: Restore dependencies
         run: |
