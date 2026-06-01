@@ -25,6 +25,10 @@ jobs:
 
       - name: Install .NET MAUI Workloads
         run: |
+          echo "=== Xcode versions installed ==="
+          ls -la /Applications | grep -i xcode || true
+          echo "=== Current active Xcode ==="
+          xcode-select -p || true
           dotnet workload install maui-ios --ignore-failed-sources
 
       - name: Restore dependencies
