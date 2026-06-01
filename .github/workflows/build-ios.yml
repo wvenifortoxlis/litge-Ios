@@ -22,7 +22,7 @@ jobs:
 
       - name: Install .NET MAUI Workloads
         run: |
-          dotnet workload install ios --ignore-failed-sources
+          sudo dotnet workload install ios --ignore-failed-sources
 
       - name: Restore dependencies
         run: |
