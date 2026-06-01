@@ -89,8 +89,8 @@ Use `dotnet workload search` to find additional workloads to install.
 
 === dotnet restore ===
   Determining projects to restore...
-  Restored /Users/runner/work/litge-Ios/litge-Ios/LitGe/LitGe.csproj (in 5.72 sec).
+  Restored /Users/runner/work/litge-Ios/litge-Ios/LitGe/LitGe.csproj (in 2.75 sec).
 === dotnet publish ===
   Determining projects to restore...
-/Users/runner/.dotnet/sdk/10.0.300/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.ImportWorkloads.targets(38,5): error NETSDK1147: To build this project, the following workloads must be installed: android [/Users/runner/work/litge-Ios/litge-Ios/LitGe/LitGe.csproj::TargetFramework=net9.0-android]
-/Users/runner/.dotnet/sdk/10.0.300/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.ImportWorkloads.targets(38,5): error NETSDK1147: To install these workloads, run the following command: dotnet workload restore [/Users/runner/work/litge-Ios/litge-Ios/LitGe/LitGe.csproj::TargetFramework=net9.0-android]
+  Restored /Users/runner/work/litge-Ios/litge-Ios/LitGe/LitGe.csproj (in 989 ms).
+/Users/runner/.dotnet/packs/Microsoft.iOS.Sdk.net9.0_26.5/26.5.9002/tools/msbuild/Xamarin.Shared.targets(1994,3): error : No valid iOS code signing keys found in keychain. You need to request a codesigning certificate from https://developer.apple.com. [/Users/runner/work/litge-Ios/litge-Ios/LitGe/LitGe.csproj::TargetFramework=net9.0-ios]
