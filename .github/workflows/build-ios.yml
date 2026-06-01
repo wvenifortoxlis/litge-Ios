@@ -1,0 +1,40 @@
+name: Build iOS IPA
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Install .NET MAUI Workloads
+        run: |
+          dotnet workload install ios --ignore-failed-sources
+
+      - name: Restore dependencies
+        run: |
+          dotnet restore LitGe/LitGe.csproj
+
+      - name: Build and Publish (Unsigned/Ad-hoc IPA)
+        run: |
+          dotnet publish LitGe/LitGe.csproj -f net9.0-ios -c Release -p:BuildIpa=true -p:CodesignKey="-" -p:CodesignProvision=""
+
+      - name: Find and Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: LitGe-iOS-IPA
+          path: |
+            **/*.ipa
