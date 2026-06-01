@@ -26,11 +26,45 @@ jobs:
 
       - name: Restore dependencies
         run: |
-          dotnet restore LitGe/LitGe.csproj -p:TargetFrameworks=net9.0-ios
+          echo "=== dotnet --info ===" | tee build_log.txt
+          dotnet --info 2>&1 | tee -a build_log.txt
+          echo "=== dotnet workload list ===" | tee -a build_log.txt
+          dotnet workload list 2>&1 | tee -a build_log.txt
+          echo "=== dotnet restore ===" | tee -a build_log.txt
+          dotnet restore LitGe/LitGe.csproj -p:TargetFrameworks=net9.0-ios 2>&1 | tee -a build_log.txt
 
       - name: Build and Publish (Unsigned/Ad-hoc IPA)
         run: |
-          dotnet publish LitGe/LitGe.csproj -f net9.0-ios -c Release -p:BuildIpa=true -p:CodesignKey="-" -p:CodesignProvision=""
+          echo "=== dotnet publish ===" | tee -a build_log.txt
+          dotnet publish LitGe/LitGe.csproj -f net9.0-ios -c Release -p:ArchiveOnBuild=true -p:RuntimeIdentifier=ios-arm64 -p:CodesignKey="" -p:CodesignProvision="" 2>&1 | tee -a build_log.txt
+
+      - name: Package IPA manually
+        run: |
+          echo "=== Checking for generated IPA or APP ==="
+          find . -name "*.ipa" -o -name "*.app"
+          IPA_PATH=$(find . -name "*.ipa" | head -n 1)
+          if [ -z "$IPA_PATH" ]; then
+            echo "No .ipa file found. Attempting to package .app bundle into .ipa manually..."
+            APP_PATH=$(find . -name "*.app" -maxdepth 5 | grep -v "obj/" | head -n 1)
+            if [ -n "$APP_PATH" ]; then
+              echo "Found .app bundle at: $APP_PATH"
+              mkdir -p Payload
+              cp -r "$APP_PATH" Payload/
+              zip -r LitGe.ipa Payload
+              echo "Manually packaged LitGe.ipa successfully."
+            else
+              echo "No .app bundle found. Cannot package IPA."
+            fi
+          else
+            echo "IPA already exists at: $IPA_PATH"
+          fi
+
+      - name: Upload Logs (Always)
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Build-Logs
+          path: build_log.txt
 
       - name: Find and Upload IPA
         uses: actions/upload-artifact@v4
