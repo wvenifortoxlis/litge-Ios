@@ -26,7 +26,7 @@ jobs:
 
       - name: Restore dependencies
         run: |
-          dotnet restore LitGe/LitGe.csproj
+          dotnet restore LitGe/LitGe.csproj -p:TargetFrameworks=net9.0-ios
 
       - name: Build and Publish (Unsigned/Ad-hoc IPA)
         run: |
