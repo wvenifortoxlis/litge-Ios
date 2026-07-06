@@ -14,10 +14,12 @@
                 TextColor="{DynamicResource TextColor}"
                 VerticalOptions="Center" />
             <ImageButton
+                BackgroundColor="Transparent"
+                Padding="0"
                 Clicked="ImageButton_Clicked"
                 HeightRequest="18"
                 HorizontalOptions="End"
-                Source="x_icon.svg"
+                Source="x_icon"
                 VerticalOptions="Center"
                 WidthRequest="18" />
         </Grid>

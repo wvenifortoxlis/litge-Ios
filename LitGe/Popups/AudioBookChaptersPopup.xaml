@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <mct:Popup
     x:Class="LitGe.Popups.AudioBookChaptersPopup"
@@ -35,8 +35,10 @@
             <ImageButton
                 Grid.Column="1"
                 Aspect="Center"
+                BackgroundColor="Transparent"
+                Padding="0"
                 Command="{Binding CloseCommand}"
-                Source="x_icon.svg" />
+                Source="x_icon" />
             <ListView
                 Grid.Row="1"
                 Grid.ColumnSpan="2"

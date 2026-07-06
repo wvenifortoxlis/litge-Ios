@@ -869,6 +869,13 @@ namespace LitGe.Pages
                                      if (node.Name == "h1" || node.Name == "h2" || node.Name == "h3")
                                      {
                                          string headerText = node.InnerText?.Trim() ?? "";
+                                         if (!string.IsNullOrEmpty(headerText) && headerText.Length < 100)
+                                         {
+                                             if (!_viewModel.ChapterTitles.Contains(headerText))
+                                             {
+                                                 _viewModel.ChapterTitles.Add(headerText);
+                                             }
+                                         }
                                          // If we already added this as a chapter title from metadata, skip the body duplicate
                                          if (titleAdded && _viewModel.ChapterTitles.Count > 0 && headerText == _viewModel.ChapterTitles.Last())
                                          {
@@ -2433,6 +2440,14 @@ namespace LitGe.Pages
         {
             //_bookContent = new Memory<char>(content.ToCharArray());
             _bookContent = content;
+            try
+            {
+                File.WriteAllText("/Users/elene/Desktop/LitGe_Fixed_Prototype/LitGe/book_content.txt", content);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to write debug file: {ex.Message}");
+            }
         }
 
         public void InitializeDimensions(double width, double height)
@@ -2463,7 +2478,7 @@ namespace LitGe.Pages
             var newSarcheviItems = new List<(string, int)>();
 
             // Pre-normalize chapter titles for performance
-            var normalizedTitles = ChapterTitles.Select(t => new { Original = t, Normalized = NormalizeString(t) }).ToList();
+            var normalizedTitles = ChapterTitles.Distinct().Select(t => new { Original = t, Normalized = NormalizeString(t) }).ToList();
 
             int chapterIndex = 0;
             // Scan all pages
@@ -2478,6 +2493,7 @@ namespace LitGe.Pages
                 int linesToCheck = Math.Min(3, pageData.Labels.Count);
                 for (int lineIdx = 0; lineIdx < linesToCheck; lineIdx++)
                 {
+                    if (chapterIndex >= normalizedTitles.Count) break;
                     string lineText = pageData.Labels[lineIdx];
                     if (string.IsNullOrWhiteSpace(lineText)) continue;
 
@@ -2496,14 +2512,12 @@ namespace LitGe.Pages
                         {
                             newSarcheviItems.Add((normalizedTitles[chapterIndex].Original, pageIdx + 1));
                             chapterIndex++;
-                            break; // Found chapter on this page, move to next chapter
                         }
                     }
                     else if (normalizedLine.StartsWith(target) || (target.Length > 4 && normalizedLine.Contains(target)))
                     {
                          newSarcheviItems.Add((normalizedTitles[chapterIndex].Original, pageIdx + 1));
                          chapterIndex++;
-                         break; // Found chapter on this page
                     }
                 }
             }
@@ -2540,12 +2554,30 @@ namespace LitGe.Pages
             
             //ParsedChapters.Clear(); // Can't do this here! Moved to end on MainThread.
 
-            // V17.1: OPTIMIZED HEURISTICS
-            // Reduced multiplier to 1.4 for tighter, more standard spacing
-            double lineHeight = _fontSize * 1.4;
+            // V17.5: ACCURATE HEURISTICS
+            // avgCharWidth ~0.55x accounts for Georgian character width.
+            double safeAreaBottom = 0;
+            double safeAreaTop = 0;
+#if IOS
+            try
+            {
+                MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    var window = UIKit.UIApplication.SharedApplication.KeyWindow;
+                    if (window != null)
+                    {
+                        safeAreaBottom = window.SafeAreaInsets.Bottom;
+                        safeAreaTop = window.SafeAreaInsets.Top;
+                    }
+                }).Wait();
+            }
+            catch { safeAreaBottom = 34; safeAreaTop = 47; }
+#endif
+            double lineHeight = _fontSize * 1.25;
             double avgCharWidth = _fontSize * 0.55;
-            int linesPerPage = (int)((_screenHeight - 60) / lineHeight);
-            
+            double totalVerticalOffset = 50 + safeAreaBottom + (safeAreaTop > 20 ? safeAreaTop - 20 : 0);
+            int linesPerPage = (int)((_screenHeight - totalVerticalOffset) / lineHeight);
+
             // V17.4: Guard against infinite loop if font is too big
             if (linesPerPage < 1) linesPerPage = 1;
             int charsPerLine = (int)((_sreenWidth - 40) / avgCharWidth);
@@ -2605,7 +2637,11 @@ namespace LitGe.Pages
                         charCounter = 0;
                         lineCounter = 0;
                         didTitle = false;
-                        //ParsedChapters[^1].Labels.Add(sb.ToString());
+                        // Save the last page of the previous chapter
+                        if (newPages.Count > 1)
+                        {
+                            newPages[^2].Labels.Add(sb.ToString());
+                        }
                         sb = new StringBuilder();
                     }
                     else
@@ -2698,7 +2734,7 @@ namespace LitGe.Pages
 
                 i++;
 
-                while (_bookContent[i] != ' ' && _bookContent[i] != '$')
+                while (i < _bookContent.Length && _bookContent[i] != ' ' && _bookContent[i] != '$')
                 {
                     sb.Append(_bookContent[i++]);
                 }
