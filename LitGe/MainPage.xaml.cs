@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using CommunityToolkit.Maui.Alerts;
@@ -121,24 +121,5 @@ namespace LitGe
             //await Shell.Current.GoToAsync($"//{nameof(BooksPage)}", true);
         }
 
-        private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
-        {
-            try
-            {
-                Uri uri = new Uri("https://www.lit.ge/register/");
-                BrowserLaunchOptions options = new BrowserLaunchOptions
-                {
-                    LaunchMode = BrowserLaunchMode.SystemPreferred,
-                    TitleMode = BrowserTitleMode.Show,
-                    PreferredToolbarColor = Colors.AliceBlue,
-                    PreferredControlColor = Colors.Violet,
-                };
-                await Browser.Default.OpenAsync(uri, options);
-            }
-            catch (Exception ex)
-            {
-                // An unexpected error occurred. No browser may be installed on the device.
-            }
-        }
     }
 }

@@ -128,14 +128,9 @@
                 x:Name="RegistrationLabel"
                 FontSize="Body"
                 HorizontalOptions="Center"
-                Text="რეგისტრაცია"
+                Text="ანგარიში არ გაქვს? ეწვიე lit.ge"
                 TextColor="{DynamicResource DarkerTextColor}"
-                TextDecorations="Underline"
-                VerticalOptions="Center">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="Registration_Tapped" />
-                </Label.GestureRecognizers>
-            </Label>
+                VerticalOptions="Center" />
             <Button
                 x:Name="LoginButton"
                 Clicked="LoginButton_Clicked"

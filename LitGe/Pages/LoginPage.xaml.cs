@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Core.Platform;
 using LitGe.Lib;
@@ -136,18 +136,6 @@ namespace LitGe.Pages
             }
         }
 
-        private async void Registration_Tapped(object sender, TappedEventArgs e)
-        {
-            Uri uri = new Uri("https://www.lit.ge/register/");
-            BrowserLaunchOptions options = new BrowserLaunchOptions
-            {
-                LaunchMode = BrowserLaunchMode.SystemPreferred,
-                TitleMode = BrowserTitleMode.Show,
-                PreferredToolbarColor = Colors.AliceBlue,
-                PreferredControlColor = Colors.Violet,
-            };
-            await Browser.Default.OpenAsync(uri, options);
-        }
 
         private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
         {

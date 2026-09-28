@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
     x:Class="LitGe.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -28,17 +28,7 @@
                     FontSize="Subtitle"
                     Text="შესვლა"
                     TextColor="White" />
-                <Label
-                    FontAttributes="Bold"
-                    FontSize="Subtitle"
-                    HorizontalTextAlignment="Center"
-                    Text="რეგისტრაცია"
-                    TextColor="Black"
-                    TextDecorations="Underline">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                    </Label.GestureRecognizers>
-                </Label>
+
             </VerticalStackLayout>
         </Grid>
     </Grid>

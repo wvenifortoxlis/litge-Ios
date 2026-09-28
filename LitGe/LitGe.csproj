@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<DebugType>portable</DebugType>
 		<DebugSymbols>true</DebugSymbols>
@@ -29,14 +29,14 @@
 		<ApplicationTitle>Lit.ge</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.LitGe</ApplicationId>
+		<ApplicationId>com.litge.app</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>2.8.1</ApplicationDisplayVersion>
 		<ApplicationVersion>131</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">12.3</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
@@ -53,7 +53,7 @@
 	  <AndroidUseAapt2>True</AndroidUseAapt2>
 	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
 	  <ApplicationDisplayVersion>2.8.1</ApplicationDisplayVersion>
-	  <ApplicationId>com.companyname.LitGe</ApplicationId>
+	  <ApplicationId>com.litge.app</ApplicationId>
 	  <AndroidTargetSdkVersion>34</AndroidTargetSdkVersion>
 	  <ApplicationVersion>131</ApplicationVersion>
 	</PropertyGroup>
@@ -63,43 +63,43 @@
 	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <ApplicationDisplayVersion>1.5.35</ApplicationDisplayVersion>
-	  <ApplicationId>com.companyname.LitGe</ApplicationId>
+	  <ApplicationId>com.litge.app</ApplicationId>
 	  <ApplicationVersion>43</ApplicationVersion>
 	</PropertyGroup>
 		
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
 	  <ApplicationDisplayVersion>1.5.35</ApplicationDisplayVersion>
-	  <ApplicationId>com.companyname.LitGe</ApplicationId>
+	  <ApplicationId>com.litge.app</ApplicationId>
 	  <ApplicationVersion>43</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
 	  <ApplicationDisplayVersion>1.5.35</ApplicationDisplayVersion>
-	  <ApplicationId>com.companyname.LitGe</ApplicationId>
+	  <ApplicationId>com.litge.app</ApplicationId>
 	  <ApplicationVersion>43</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|AnyCPU'">
 	  <ApplicationDisplayVersion>1.5.35</ApplicationDisplayVersion>
-	  <ApplicationId>com.companyname.LitGe</ApplicationId>
+	  <ApplicationId>com.litge.app</ApplicationId>
 	  <ApplicationVersion>43</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
 	  <ApplicationDisplayVersion>1.5.35</ApplicationDisplayVersion>
-	  <ApplicationId>com.companyname.LitGe</ApplicationId>
+	  <ApplicationId>com.litge.app</ApplicationId>
 	  <ApplicationVersion>43</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
 	  <ApplicationDisplayVersion>1.5.35</ApplicationDisplayVersion>
-	  <ApplicationId>com.companyname.LitGe</ApplicationId>
+	  <ApplicationId>com.litge.app</ApplicationId>
 	  <ApplicationVersion>43</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
 	  <ApplicationDisplayVersion>1.5.35</ApplicationDisplayVersion>
-	  <ApplicationId>com.companyname.LitGe</ApplicationId>
+	  <ApplicationId>com.litge.app</ApplicationId>
 	  <ApplicationVersion>43</ApplicationVersion>
 	</PropertyGroup>
 

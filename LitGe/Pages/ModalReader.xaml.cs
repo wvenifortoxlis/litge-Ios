@@ -800,9 +800,9 @@ namespace LitGe.Pages
 
 
 
-                        bool titleAdded = false;
                         foreach (string htmlFile in htmlFiles.Where(x => x.Contains("chapter") || x.Contains("title")))
                         {
+                            bool titleAdded = false;
                             if (token.IsCancellationRequested) return;
                             ZipEntry htmlZipEntry = zip.GetEntry($"OEBPS/{htmlFile}");
                             byte[] htmlBuff;
@@ -1134,8 +1134,13 @@ namespace LitGe.Pages
                     retries++;
                 }
 
-                double width = MainContent.Width > 0 ? MainContent.Width : 375;
-                double height = MainContent.Height > 0 ? MainContent.Height : 667;
+                double density = Microsoft.Maui.Devices.DeviceDisplay.MainDisplayInfo.Density;
+                if (density <= 0) density = 1;
+                double width = Microsoft.Maui.Devices.DeviceDisplay.MainDisplayInfo.Width / density;
+                double height = Microsoft.Maui.Devices.DeviceDisplay.MainDisplayInfo.Height / density;
+                
+                if (width <= 0) width = 375;
+                if (height <= 0) height = 667;
 
                 // Mark as initialized early to prevent race conditions during dimension setting
                 _initialized = true;
@@ -1175,11 +1180,11 @@ namespace LitGe.Pages
 
             if (_resourceManager.GetBookmarks(_title).Any(b => b.Page == viewModel.CurrentPage))
             {
-                BookmarkButton.Source = "bookmark_add_green.svg";
+                BookmarkButton.Source = "bookmark_add_green.png";
             }
             else
             {
-                BookmarkButton.Source = "bookmark_add.svg";
+                BookmarkButton.Source = "bookmark_add.png";
             }
 
             // es pizdecia aq, moashore mere
@@ -1275,7 +1280,7 @@ namespace LitGe.Pages
                             )
                         )
                     );
-                    btn.Source = "bookmark_add_green.svg";
+                    btn.Source = "bookmark_add_green.png";
                 }
                 else
                 {
@@ -1286,7 +1291,7 @@ namespace LitGe.Pages
                             page: _viewModel.CurrentPage
                         )
                     );
-                    btn.Source = "bookmark_add.svg";
+                    btn.Source = "bookmark_add.png";
                 }
             }
             catch (Exception ex)
@@ -2480,11 +2485,12 @@ namespace LitGe.Pages
             // Pre-normalize chapter titles for performance
             var normalizedTitles = ChapterTitles.Distinct().Select(t => new { Original = t, Normalized = NormalizeString(t) }).ToList();
 
-            int chapterIndex = 0;
+            var unfoundTitles = ChapterTitles.Distinct().Select(t => new { Original = t, Normalized = NormalizeString(t) }).ToList();
+
             // Scan all pages
             for (int pageIdx = 0; pageIdx < sourcePages.Count; pageIdx++)
             {
-                if (chapterIndex >= normalizedTitles.Count) break;
+                if (unfoundTitles.Count == 0) break;
 
                 var pageData = sourcePages[pageIdx];
                 if (pageData?.Labels == null || pageData.Labels.Count == 0) continue;
@@ -2493,31 +2499,24 @@ namespace LitGe.Pages
                 int linesToCheck = Math.Min(3, pageData.Labels.Count);
                 for (int lineIdx = 0; lineIdx < linesToCheck; lineIdx++)
                 {
-                    if (chapterIndex >= normalizedTitles.Count) break;
+                    if (unfoundTitles.Count == 0) break;
                     string lineText = pageData.Labels[lineIdx];
                     if (string.IsNullOrWhiteSpace(lineText)) continue;
 
                     string normalizedLine = NormalizeString(lineText);
-                    string target = normalizedTitles[chapterIndex].Normalized;
 
-                    // FUZZY MATCH LOGIC
-                    // 1. Exact match of normalized strings
-                    // 2. Line starts with Title (e.g. "Chapter 1 \n The Beginning")
-                    // 3. Title contains Line (rare, but for weird splitting)
-                    
-                    // Only match if lengths are reasonable to avoid matching "I" to everything
-                    if (normalizedLine.Length < 2 && target.Length < 2)
+                    // Find if any unfound title matches this line
+                    var matchedTitle = unfoundTitles.FirstOrDefault(t => 
                     {
-                        if (normalizedLine == target)
-                        {
-                            newSarcheviItems.Add((normalizedTitles[chapterIndex].Original, pageIdx + 1));
-                            chapterIndex++;
-                        }
-                    }
-                    else if (normalizedLine.StartsWith(target) || (target.Length > 4 && normalizedLine.Contains(target)))
+                        string target = t.Normalized;
+                        if (normalizedLine.Length < 2 && target.Length < 2) return normalizedLine == target;
+                        return normalizedLine.StartsWith(target) || (target.Length > 4 && normalizedLine.Contains(target));
+                    });
+
+                    if (matchedTitle != null)
                     {
-                         newSarcheviItems.Add((normalizedTitles[chapterIndex].Original, pageIdx + 1));
-                         chapterIndex++;
+                         newSarcheviItems.Add((matchedTitle.Original, pageIdx + 1));
+                         unfoundTitles.Remove(matchedTitle);
                     }
                 }
             }
@@ -2555,7 +2554,7 @@ namespace LitGe.Pages
             //ParsedChapters.Clear(); // Can't do this here! Moved to end on MainThread.
 
             // V17.5: ACCURATE HEURISTICS
-            // avgCharWidth ~0.55x accounts for Georgian character width.
+            // avgCharWidth accounts for Georgian character width. Lowered to 0.48 to fit more characters per line.
             double safeAreaBottom = 0;
             double safeAreaTop = 0;
 #if IOS
@@ -2573,9 +2572,11 @@ namespace LitGe.Pages
             }
             catch { safeAreaBottom = 34; safeAreaTop = 47; }
 #endif
-            double lineHeight = _fontSize * 1.25;
-            double avgCharWidth = _fontSize * 0.55;
-            double totalVerticalOffset = 50 + safeAreaBottom + (safeAreaTop > 20 ? safeAreaTop - 20 : 0);
+            double lineHeight = _fontSize * 1.35; // Increased slightly for better visual breathing room
+            double avgCharWidth = _fontSize * 0.52; // Reverted closer to original value for safer wrapping
+            
+            // Increased by 60 to ensure the text doesn't touch the home indicator and bottom safe area
+            double totalVerticalOffset = 110 + safeAreaBottom + (safeAreaTop > 20 ? safeAreaTop - 20 : 0);
             int linesPerPage = (int)((_screenHeight - totalVerticalOffset) / lineHeight);
 
             // V17.4: Guard against infinite loop if font is too big
@@ -2630,23 +2631,18 @@ namespace LitGe.Pages
                 if (_bookContent[i] == '[' && _bookContent[i + 1] == '|')
                 {
                     i++;
-                    newPages.Add(new PageData());
-
+                    
                     if (!isFirst)
                     {
-                        charCounter = 0;
-                        lineCounter = 0;
+                        // Don't break the page, just add some spacing before the new chapter
+                        sb.Append("<br/><br/>");
+                        lineCounter += 2;
                         didTitle = false;
-                        // Save the last page of the previous chapter
-                        if (newPages.Count > 1)
-                        {
-                            newPages[^2].Labels.Add(sb.ToString());
-                        }
-                        sb = new StringBuilder();
                     }
                     else
                     {
                         isFirst = false;
+                        newPages.Add(new PageData()); // Initial page for the book
                     }
 
                     sb.Append("<h3>");
