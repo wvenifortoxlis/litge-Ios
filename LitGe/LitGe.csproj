@@ -33,7 +33,7 @@
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>2.8.1</ApplicationDisplayVersion>
-		<ApplicationVersion>133</ApplicationVersion>
+		<ApplicationVersion>134</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">12.3</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
@@ -55,7 +55,7 @@
 	  <ApplicationDisplayVersion>2.8.1</ApplicationDisplayVersion>
 	  <ApplicationId>com.litge.app</ApplicationId>
 	  <AndroidTargetSdkVersion>34</AndroidTargetSdkVersion>
-	  <ApplicationVersion>133</ApplicationVersion>
+	  <ApplicationVersion>134</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
